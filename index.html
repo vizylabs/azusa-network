@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Azusa Network — Churches &amp; Ministries</title>
+  <meta name="description" content="You don't have to run alone. Fostering authentic relationships and Spirit-empowered ministry growth, advancing the kingdom of God together. Led by Apostle Dr. Scott & Michelle Reece." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body class="locked-mode">
+
+  <!-- ===================================================================== -->
+  <!-- COMING SOON LANDING GATE (Click the Logo to Open Password Prompt)     -->
+  <!-- ===================================================================== -->
+  <section id="comingSoonGate" class="coming-soon-gate" aria-label="Coming Soon Landing Page">
+    <div class="coming-soon-bg" aria-hidden="true"></div>
+
+    <div class="container coming-soon-container">
+      <!-- Top Bar with Clickable Logo (Email Hidden) -->
+      <div class="coming-soon-topbar">
+        <button type="button" class="logo-secret-trigger" id="comingSoonLogoTop" aria-label="The Azusa Network">
+          <div class="brand-mark-lg">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="44" stroke="currentColor" stroke-width="5" />
+              <path d="M51 18C43 29 34 39 36 53C37.5 64 46 72 56 71C66 70 72 60 70 49C68.5 41 62 36 61 29C58 35 55 39 57 46C58.5 51 55 57 50 57C45 57 43 51 45 44C47 36 53 28 51 18Z" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M35 67C40 76 51 80 61 75" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="brand-type">
+            <span class="brand-name">The Azusa Network</span>
+            <span class="brand-sub">Of Churches &amp; Ministries</span>
+          </div>
+        </button>
+
+        <span class="coming-soon-status-tag">Launching Soon</span>
+      </div>
+
+      <!-- Main Coming Soon Content Grid -->
+      <div class="coming-soon-grid">
+        <div class="coming-soon-main">
+          <h1 class="coming-soon-title">
+            You don’t have to run alone.
+          </h1>
+
+          <p class="coming-soon-lead">
+            We are preparing the new online home and member portal for <strong>The Azusa Network of Churches &amp; Ministries</strong>—fostering authentic relationships, spiritual accountability that honors self-governance, and Spirit-empowered ministry growth.
+          </p>
+
+          <!-- Launch Notification Form (Sends POST to /api/webhook) -->
+          <form id="comingSoonNotifyForm" class="coming-soon-form" novalidate>
+            <label for="notifyEmail" class="sr-only">Email Address</label>
+            <input type="email" id="notifyEmail" name="email" required placeholder="Enter your email for launch updates..." />
+            <button type="submit" class="btn btn-gold" id="notifySubmitBtn">
+              Notify Me at Launch
+            </button>
+          </form>
+          <p id="notifyFeedback" class="coming-soon-feedback" role="status" aria-live="polite"></p>
+
+          <div class="coming-soon-values-strip">
+            <div>
+              <strong>Relational Mentoring</strong>
+              <span>Equipping &amp; encouraging leaders in the church</span>
+            </div>
+            <div>
+              <strong>Spiritual Accountability</strong>
+              <span>Guidance while honoring self-governance</span>
+            </div>
+            <div>
+              <strong>Effective Leadership</strong>
+              <span>Empowering Spirit-led ministry growth</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Card: Cleaned Photo of Scott & Michelle Reece Together -->
+        <div class="coming-soon-card">
+          <figure class="cs-couple-photo-frame">
+            <img src="./assets/scott-and-michelle-clean.jpg" alt="Apostle Dr. Scott & Michelle Reece" />
+          </figure>
+
+          <blockquote class="cs-quote">
+            “This network is all about building empowering relationships in the spirit of revival and growing together in Christ.”
+          </blockquote>
+
+          <div class="cs-author">
+            <strong>Apostle Dr. Scott &amp; Michelle Reece</strong>
+            <span>Overseers, The Azusa Network</span>
+          </div>
+        </div>
+      </div>
+
+      <footer class="coming-soon-footer">
+        <span>&copy; 2026 The Azusa Network · azusanetwork.com</span>
+      </footer>
+    </div>
+  </section>
+
+  <!-- PASSWORD PROMPT MODAL (Triggered by clicking the Azusa Logo) -->
+  <div class="password-modal-backdrop" id="passwordModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pwModalTitle">
+    <div class="password-modal-box">
+      <button type="button" class="pw-close-btn" id="closePwModalBtn" aria-label="Close password dialog">&times;</button>
+      <div class="pw-emblem" aria-hidden="true">
+        <svg viewBox="0 0 100 100" fill="none">
+          <circle cx="50" cy="50" r="44" stroke="currentColor" stroke-width="5" />
+          <path d="M51 18C43 29 34 39 36 53C37.5 64 46 72 56 71C66 70 72 60 70 49C68.5 41 62 36 61 29C58 35 55 39 57 46C58.5 51 55 57 50 57C45 57 43 51 45 44C47 36 53 28 51 18Z" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M35 67C40 76 51 80 61 75" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" />
+        </svg>
+      </div>
+      <h2 id="pwModalTitle" class="pw-title">Leadership Preview Access</h2>
+      <p class="pw-desc">Enter the preview password to explore the full Azusa Network website and Member Portal.</p>
+      <form id="passwordUnlockForm" novalidate>
+        <div class="pw-input-wrap">
+          <label for="previewPasswordInput" class="sr-only">Preview Password</label>
+          <input type="password" id="previewPasswordInput" placeholder="Enter password..." autocomplete="off" required />
+        </div>
+        <p id="pwErrorMsg" class="pw-error" role="alert"></p>
+        <button type="submit" class="btn btn-gold btn-block">
+          Unlock Website Preview
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- FULL WEBSITE SHELL (Revealed When Unlocked)                           -->
+  <!-- ===================================================================== -->
+  <div id="siteWrapper" class="site-wrapper">
+
+    <!-- Textured & Atmospheric Site Header -->
+    <header class="site-header" id="siteHeader">
+      <div class="header-bg-layer" aria-hidden="true"></div>
+      <div class="container header-inner">
+        <a href="#top" class="brand" data-nav-public>
+          <div class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="44" stroke="currentColor" stroke-width="5" />
+              <path d="M51 18C43 29 34 39 36 53C37.5 64 46 72 56 71C66 70 72 60 70 49C68.5 41 62 36 61 29C58 35 55 39 57 46C58.5 51 55 57 50 57C45 57 43 51 45 44C47 36 53 28 51 18Z" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M35 67C40 76 51 80 61 75" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="brand-type">
+            <span class="brand-name">The Azusa Network</span>
+            <span class="brand-sub">Of Churches &amp; Ministries</span>
+          </div>
+        </a>
+
+        <nav class="primary-nav" id="primaryNav" aria-label="Main Navigation">
+          <a href="#values" class="nav-link" data-nav-public>Core Values</a>
+          <a href="#leadership" class="nav-link" data-nav-public>Scott &amp; Michelle</a>
+          <a href="#subscriptions" class="nav-link" data-nav-public>Membership</a>
+          <a href="#credentialing" class="nav-link" data-nav-public>Ordination</a>
+          <a href="#gatherings" class="nav-link" data-nav-public>Gatherings</a>
+          <a href="#contact" class="nav-link" data-nav-public>Contact</a>
+
+          <!-- Mobile-only quick actions inside drawer -->
+          <div class="mobile-nav-actions">
+            <button type="button" class="btn btn-ghost-light btn-block" id="mobilePortalBtn">
+              Member Portal
+            </button>
+            <a href="#subscriptions" class="btn btn-gold btn-block" data-nav-public>
+              Join the Network
+            </a>
+            <button type="button" class="btn-lock-preview mobile-lock-btn" data-lock-site>
+              Return to Coming Soon Screen
+            </button>
+          </div>
+        </nav>
+
+        <div class="header-actions">
+          <button type="button" class="btn-lock-preview" data-lock-site title="Return to Coming Soon landing page">
+            Lock Preview
+          </button>
+          <button type="button" class="btn-portal-switch" id="openPortalBtn" aria-label="Switch to Member Portal">
+            <span id="portalSwitchLabel">Member Portal</span>
+          </button>
+          <a href="#subscriptions" class="btn btn-gold" data-nav-public>
+            Join the Network
+          </a>
+          <button type="button" class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle Menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- =================================================================== -->
+    <!-- VIEW 1: PUBLIC WEBSITE                                              -->
+    <!-- =================================================================== -->
+    <main id="publicView" class="view-section active">
+
+      <!-- HERO SECTION -->
+      <section class="hero" id="top">
+        <div class="hero-bg-photo" aria-hidden="true"></div>
+        <div class="container hero-layout">
+
+          <div class="hero-content">
+            <h1 class="hero-title">
+              You don’t have to run alone.
+            </h1>
+            <p class="hero-description">
+              Fostering authentic relationships and Spirit-empowered ministry growth, advancing the kingdom of God together. We walk alongside pastors, ministers, and churches with genuine covering that honors your local autonomy.
+            </p>
+
+            <div class="hero-actions">
+              <a href="#subscriptions" class="btn btn-gold btn-lg">
+                View Membership Plans
+              </a>
+              <button type="button" class="btn btn-ghost-light btn-lg" data-open-modal="application" data-tier="minister">
+                Apply for Credentials
+              </button>
+            </div>
+
+            <div class="hero-highlights">
+              <div class="highlight-item">
+                <strong>Relational Mentoring</strong>
+                <span>Direct access to seasoned elders &amp; monthly roundtables</span>
+              </div>
+              <div class="highlight-item">
+                <strong>100% Local Autonomy</strong>
+                <span>Spiritual accountability while honoring self-governance</span>
+              </div>
+              <div class="highlight-item">
+                <strong>Recognized Ordination</strong>
+                <span>Full ministerial credentials &amp; congregation covering</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Visual Composition: Quote & Cleaned Portrait of Scott & Michelle Reece -->
+          <div class="hero-showcase">
+            <div class="quote-feature-card">
+              <div class="quote-watermark" aria-hidden="true">
+                <svg viewBox="0 0 120 120" fill="none">
+                  <circle cx="60" cy="60" r="54" stroke="currentColor" stroke-width="4" />
+                  <path d="M61 24C51 37 40 49 43 66C45 79 55 88 67 87C79 86 86 74 84 61C82 51 74 45 73 37C69 44 66 49 68 57C70 63 66 70 60 70C54 70 51 63 54 54C56 45 63 36 61 24Z" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+
+              <blockquote class="hero-blockquote">
+                “This network is all about building empowering relationships in the spirit of revival and growing together in Christ.”
+              </blockquote>
+
+              <div class="quote-author">
+                <img src="./assets/scott-and-michelle-clean.jpg" alt="Apostle Scott & Michelle Reece" class="author-photo-avatar" />
+                <div class="author-meta">
+                  <strong>Apostle Scott &amp; Michelle Reece</strong>
+                  <span>Overseers, The Azusa Network</span>
+                </div>
+              </div>
+
+              <div class="showcase-divider"></div>
+
+              <div class="showcase-footer">
+                <div>
+                  <p class="showcase-footer-title">Monthly Apostolic Roundtables &amp; Regional Gatherings</p>
+                  <p class="showcase-footer-sub">Connect with leaders across the Midwest and partner ministries nationwide.</p>
+                </div>
+                <button type="button" class="text-link-gold" id="heroPreviewPortalBtn">
+                  Explore Member Portal &rarr;
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 2: CORE VALUES & MISSION -->
+      <section class="section-light" id="values">
+        <div class="container">
+
+          <div class="mission-statement-block">
+            <p class="mission-serif">
+              “Ministry was never meant to be carried in isolation. When leaders walk together in covenant trust, local churches flourish and regional revival endures.”
+            </p>
+          </div>
+
+          <div class="section-header-split">
+            <h2 class="section-heading">Our Core Values</h2>
+            <p class="section-lead">
+              Unlike traditional denominations that demand control over local property or boards, The Azusa Network is built on voluntary covenant relationship and three foundational commitments.
+            </p>
+          </div>
+
+          <div class="values-showcase">
+            <!-- Value 1 -->
+            <article class="value-card">
+              <div class="value-icon-wrap" aria-hidden="true">
+                <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.75">
+                  <circle cx="12" cy="11" r="4.5" />
+                  <circle cx="21" cy="13" r="3.5" />
+                  <path d="M4.5 25c0-4.2 3.4-7.5 7.5-7.5s7.5 3.3 7.5 7.5" stroke-linecap="round" />
+                  <path d="M19 25c.4-3.1 2.7-5.5 5.8-5.5 2.1 0 3.7 1.1 4.7 2.8" stroke-linecap="round" />
+                </svg>
+              </div>
+              <h3 class="value-title">Relational Mentoring</h3>
+              <p class="value-subtitle">Equipping and encouraging leaders in the church</p>
+              <p class="value-description">
+                Leadership begins with relationship, not titles. Members gain direct connection to spiritual fathers, mothers, and peer cohorts who pray for your family, strengthen your marriage, and walk with you through every season of ministry.
+              </p>
+              <ul class="value-points">
+                <li>Monthly live mentoring roundtables with Apostle Dr. Scott Reece</li>
+                <li>Confidential pastoral counsel and marriage support</li>
+                <li>Peer cohorts for lead pastors, planters, and five-fold ministers</li>
+              </ul>
+            </article>
+
+            <!-- Value 2 -->
+            <article class="value-card value-card-elevated">
+              <div class="value-icon-wrap" aria-hidden="true">
+                <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.75">
+                  <path d="M16 4L6 8.5v7.5c0 6.4 4.3 11.8 10 13.5 5.7-1.7 10-7.1 10-13.5V8.5L16 4z" stroke-linejoin="round" />
+                  <path d="M12 16.5l2.8 2.8L20.5 13" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <h3 class="value-title">Spiritual Accountability</h3>
+              <p class="value-subtitle">Providing guidance while honoring self-governance</p>
+              <p class="value-description">
+                We believe the local church is autonomous under the headship of Jesus Christ. We never claim ownership of your pulpit, property, or treasury—instead offering wise counsel, board advisory, and protective spiritual covering when invited.
+              </p>
+              <ul class="value-points">
+                <li>100% protection of your congregation’s autonomous bylaws &amp; vision</li>
+                <li>Optional apostolic advisory board for healthy pastoral checks and balances</li>
+                <li>Recognized ecclesiastical standing, mediation, and restoration care</li>
+              </ul>
+            </article>
+
+            <!-- Value 3 -->
+            <article class="value-card">
+              <div class="value-icon-wrap" aria-hidden="true">
+                <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.75">
+                  <path d="M16.5 5C12.5 10.5 8 15 9 21.5c.8 5.2 4.8 8.5 9.2 8 4.5-.5 7.2-5 6.3-10-.7-3.6-3.5-6-4-9.2-1.4 2.7-2.7 4.5-1.8 7.6.7 2.3-.8 5-3.1 5s-3.2-2.7-2.2-5.8c.9-3.6 3.8-7.2 3.1-12.1z" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <h3 class="value-title">Effective Leadership</h3>
+              <p class="value-subtitle">Empowering Spirit-empowered ministry growth</p>
+              <p class="value-description">
+                Sustained revival requires healthy wineskins. We combine a passionate pursuit of the Holy Spirit’s gifts with practical governance frameworks—helping you train elders, steward finances, and build growing congregations.
+              </p>
+              <ul class="value-points">
+                <li>On-demand resource vault of church bylaws, policies, and training manuals</li>
+                <li>On-site apostolic ministry visits, leadership intensives, and revival services</li>
+                <li>Church-planting blueprints and cross-network ministry partnerships</li>
+              </ul>
+            </article>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 3: VISION & APOSTOLIC LEADERSHIP (Featuring Cleaned Portrait of Scott & Michelle Reece) -->
+      <section class="section-navy" id="leadership">
+        <div class="container">
+          <div class="leadership-split">
+
+            <div class="leadership-portraits-column">
+              <figure class="featured-couple-card">
+                <div class="couple-img-wrap">
+                  <img src="./assets/scott-and-michelle-clean.jpg" alt="Apostle Dr. Scott & Michelle Reece" loading="lazy" />
+                </div>
+                <figcaption class="couple-caption">
+                  <strong>Apostle Dr. Scott &amp; Michelle Reece</strong>
+                  <span>Apostolic Overseers · The Azusa Network &amp; River City Church</span>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="leadership-narrative">
+              <h2 class="section-heading light">
+                Rooted in the Spirit of Revival. Built for Today’s Church Builders.
+              </h2>
+              <blockquote class="narrative-quote">
+                “In 1906, the Azusa Street movement showed what happens when hungry leaders lay aside competition and gather around the presence of Jesus. Our heart is to see pastors strengthened, marriages whole, and the fire of the Spirit passed to the next generation.”
+              </blockquote>
+              <p>
+                Dr. Scott and Michelle Reece founded The Azusa Network to answer a cry heard from pastors and ministry leaders everywhere: the need for a safe, authentic spiritual family where you are known by name rather than treated as a number in an institution.
+              </p>
+              <p>
+                Whether you are pioneering a new church plant, pastoring an established congregation, or stewarding a five-fold itinerant or marketplace ministry, our network provides a table of encouragement, sharpening, and prayer covering.
+              </p>
+
+              <div class="leadership-pillars-two">
+                <div>
+                  <h4>Five-Fold Unity</h4>
+                  <p>Honoring apostles, prophets, evangelists, pastors, and teachers working together to equip the saints.</p>
+                </div>
+                <div>
+                  <h4>Healthy Ministry Marriages</h4>
+                  <p>Walking alongside both spouses in leadership so ministry growth never comes at the expense of family health.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: MEMBERSHIP & SUBSCRIPTION PLANS -->
+      <section class="section-subscriptions" id="subscriptions">
+        <div class="container">
+
+          <div class="pricing-header">
+            <div class="pricing-header-text">
+              <h2 class="section-heading">Network Membership &amp; Subscriptions</h2>
+              <p class="section-lead">
+                Choose the partnership level that fits your calling. Your membership directly supports monthly mentoring cohorts, ministerial credentialing, digital equipping resources, and pastoral care across the network.
+              </p>
+            </div>
+
+            <!-- Clean Segmented Billing Toggle -->
+            <div class="billing-segmented" role="group" aria-label="Billing Frequency">
+              <button type="button" class="segment-btn active" data-billing-mode="monthly">
+                Monthly Billing
+              </button>
+              <button type="button" class="segment-btn" data-billing-mode="annual">
+                Annual Covenant <span class="save-badge">Save 17%</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="pricing-grid">
+
+            <!-- Plan 1: Associate Leader -->
+            <article class="plan-card">
+              <div class="plan-header">
+                <h3 class="plan-name">Associate Leader</h3>
+                <p class="plan-for">For emerging leaders, staff pastors &amp; marketplace ministers</p>
+              </div>
+
+              <div class="plan-price-wrap">
+                <div class="plan-price">
+                  <span class="currency">$</span>
+                  <span class="amount" data-monthly="29" data-annual="24">29</span>
+                  <span class="period">/ month</span>
+                </div>
+                <p class="plan-billing-caption" data-monthly-note="Billed monthly · Cancel or upgrade anytime" data-annual-note="Billed $290 annually (2 months free)">
+                  Billed monthly · Cancel or upgrade anytime
+                </p>
+              </div>
+
+              <p class="plan-description">
+                Consistent relational connection, live monthly teaching roundtables with Dr. Scott Reece, and full access to the online equipping library.
+              </p>
+
+              <ul class="plan-features">
+                <li>Monthly Live Apostolic Roundtable on Zoom with Q&amp;A</li>
+                <li>Full access to the Digital Equipping &amp; Teaching Vault</li>
+                <li>Private Network Directory &amp; prayer fellowship channel</li>
+                <li>15% member discount on regional conferences &amp; intensives</li>
+                <li>Certificate of Associate Network Fellowship</li>
+              </ul>
+
+              <div class="plan-action">
+                <button type="button" class="btn btn-outline-navy btn-block" data-select-plan="associate">
+                  Join as Associate Leader
+                </button>
+              </div>
+            </article>
+
+            <!-- Plan 2: Credentialed Minister (Featured) -->
+            <article class="plan-card plan-card-featured">
+              <div class="featured-pill">Most Selected by Pastors &amp; Ministers</div>
+              <div class="plan-header">
+                <h3 class="plan-name">Credentialed Minister</h3>
+                <p class="plan-for">For licensed/ordained ministers, lead pastors &amp; five-fold leaders</p>
+              </div>
+
+              <div class="plan-price-wrap">
+                <div class="plan-price">
+                  <span class="currency">$</span>
+                  <span class="amount" data-monthly="59" data-annual="49">59</span>
+                  <span class="period">/ month</span>
+                </div>
+                <p class="plan-billing-caption" data-monthly-note="Billed monthly · Includes annual credential standing" data-annual-note="Billed $590 annually (2 months free)">
+                  Billed monthly · Includes annual credential standing
+                </p>
+              </div>
+
+              <p class="plan-description">
+                Full ministerial licensing or ordination covering, small-group apostolic mentoring cohorts, ecclesiastical endorsement, and annual summit pass.
+              </p>
+
+              <ul class="plan-features">
+                <li><strong>Everything in Associate Leader</strong>, plus:</li>
+                <li>Official Ministerial License or Ordination Credentials &amp; Clergy ID</li>
+                <li>Quarterly small-group mentoring cohort with Network Elders</li>
+                <li>1 complimentary pass to the Annual Azusa Network Summit</li>
+                <li>Formal ecclesiastical endorsement for weddings, chaplaincy &amp; boards</li>
+                <li>Direct pastoral care &amp; crisis counsel covering</li>
+              </ul>
+
+              <div class="plan-action">
+                <button type="button" class="btn btn-gold btn-block" data-select-plan="minister">
+                  Start Credentialed Membership
+                </button>
+              </div>
+            </article>
+
+            <!-- Plan 3: Affiliated Church & Ministry -->
+            <article class="plan-card">
+              <div class="plan-header">
+                <h3 class="plan-name">Affiliated Church &amp; Ministry</h3>
+                <p class="plan-for">For local congregations, church plants &amp; 501(c)(3) ministries</p>
+              </div>
+
+              <div class="plan-price-wrap">
+                <div class="plan-price">
+                  <span class="currency">$</span>
+                  <span class="amount" data-monthly="149" data-annual="124">149</span>
+                  <span class="period">/ month</span>
+                </div>
+                <p class="plan-billing-caption" data-monthly-note="Billed monthly · Or custom congregation tithe partnership" data-annual-note="Billed $1,490 annually (2 months free)">
+                  Billed monthly · Or custom congregation tithe partnership
+                </p>
+              </div>
+
+              <p class="plan-description">
+                Comprehensive apostolic covering for your entire leadership team while honoring 100% local self-governance, plus on-site ministry consultation.
+              </p>
+
+              <ul class="plan-features">
+                <li>Up to 10 Staff &amp; Elder Portal memberships under one church account</li>
+                <li>Apostolic board consultation (bylaws, succession &amp; governance)</li>
+                <li>Priority scheduling for Dr. Scott Reece &amp; network speakers</li>
+                <li>Featured profile in the Azusa Network Affiliated Churches Directory</li>
+                <li>2 VIP Leadership Passes (Pastor + Spouse) to the Annual Summit</li>
+                <li>Written Local Self-Governance Guarantee</li>
+              </ul>
+
+              <div class="plan-action">
+                <button type="button" class="btn btn-navy btn-block" data-select-plan="church">
+                  Affiliate Your Church
+                </button>
+              </div>
+            </article>
+
+          </div>
+
+          <!-- Custom Church Tithe / Partnership Calculator -->
+          <div class="tithe-partner-box">
+            <div class="tithe-partner-copy">
+              <h3>Prefer Percentage-Based Church Tithe Partnership?</h3>
+              <p>
+                Many affiliated congregations choose to sow a monthly percentage of their general church income (typically 2%) into The Azusa Network in place of a flat tier rate. Estimate your church’s monthly partnership below:
+              </p>
+            </div>
+            <div class="tithe-partner-controls">
+              <div class="slider-top-row">
+                <label for="churchBudgetRange">Monthly Church Income</label>
+                <output id="budgetOutput" class="slider-readout">$15,000 / mo</output>
+              </div>
+              <input type="range" id="churchBudgetRange" min="3000" max="100000" step="1000" value="15000" class="partner-slider" />
+              <div class="slider-bottom-row">
+                <div>
+                  <span class="partner-seed-label">Suggested 2% Church Partnership:</span>
+                  <strong class="partner-seed-value" id="suggestedSeedOutput">$300 / month</strong>
+                </div>
+                <button type="button" class="btn btn-outline-navy btn-sm" id="applyCustomSeedBtn">
+                  Continue With Custom Seed
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 5: ORDINATION & CREDENTIALING PATHWAY -->
+      <section class="section-light-alt" id="credentialing">
+        <div class="container">
+          <div class="section-header-split">
+            <h2 class="section-heading">Ministerial Licensing &amp; Ordination</h2>
+            <p class="section-lead">
+              A clear, relational pathway that validates your calling, affirms character in community, and commissions you publicly with the laying on of hands.
+            </p>
+          </div>
+
+          <div class="steps-grid">
+            <div class="step-card">
+              <span class="step-num">1</span>
+              <h3>Application &amp; Membership</h3>
+              <p>
+                Complete your ministerial application, share your testimony and pastoral references, and activate your Credentialed Minister membership.
+              </p>
+            </div>
+
+            <div class="step-card">
+              <span class="step-num">2</span>
+              <h3>Equipping &amp; Elder Dialogue</h3>
+              <p>
+                Complete the foundational Azusa Network equipping tracks in the Member Portal and meet on video or in person with an Apostolic Presbytery Elder.
+              </p>
+            </div>
+
+            <div class="step-card">
+              <span class="step-num">3</span>
+              <h3>Public Commissioning</h3>
+              <p>
+                Receive your official Ministerial License or Ordination Certificate and clergy ID, with public commissioning at our regional gathering or your home church.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 6: UPCOMING GATHERINGS -->
+      <section class="section-light" id="gatherings">
+        <div class="container">
+          <div class="section-header-split">
+            <h2 class="section-heading">Upcoming Gatherings &amp; Roundtables</h2>
+            <p class="section-lead">
+              Active network members receive complimentary or discounted access to all live online roundtables, regional summits, and commissioning services.
+            </p>
+          </div>
+
+          <div class="events-list">
+            <article class="event-card">
+              <div class="event-date">
+                <span class="month">Dec</span>
+                <span class="day">10</span>
+              </div>
+              <div class="event-info">
+                <span class="event-meta">Live Member Roundtable · Zoom · 11:00 AM CST</span>
+                <h3>Finishing the Year Strong &amp; Hearing God for the New Year</h3>
+                <p>Interactive apostolic mentoring session and open pastoral Q&amp;A with Dr. Scott Reece.</p>
+              </div>
+              <div class="event-cta">
+                <button type="button" class="btn btn-outline-navy" data-rsvp-event="Finishing the Year Strong Roundtable">
+                  Reserve Spot
+                </button>
+              </div>
+            </article>
+
+            <article class="event-card">
+              <div class="event-date">
+                <span class="month">Feb</span>
+                <span class="day">18–20</span>
+              </div>
+              <div class="event-info">
+                <span class="event-meta">Annual Regional Gathering · Bettendorf, IA (River City Church)</span>
+                <h3>Azusa Network Winter Revival &amp; Leaders’ Advance</h3>
+                <p>Three days of prophetic worship, daytime leadership roundtables, pastors’ luncheons, and evening revival services.</p>
+              </div>
+              <div class="event-cta">
+                <button type="button" class="btn btn-outline-navy" data-rsvp-event="Azusa Network Winter Revival & Leaders' Advance">
+                  Register Now
+                </button>
+              </div>
+            </article>
+
+            <article class="event-card">
+              <div class="event-date">
+                <span class="month">May</span>
+                <span class="day">06</span>
+              </div>
+              <div class="event-info">
+                <span class="event-meta">Commissioning Service · Midwest &amp; Online Cohort</span>
+                <h3>Spring Ministerial Ordination &amp; Church Affiliation Service</h3>
+                <p>Formal ordination and congregation affiliation service with laying on of hands and prophetic presbytery.</p>
+              </div>
+              <div class="event-cta">
+                <button type="button" class="btn btn-outline-navy" data-open-modal="application" data-tier="minister">
+                  Apply for Cohort
+                </button>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 7: CONNECT & NEWSLETTER (Email Hidden — Routes via Webhook) -->
+      <section class="section-contact" id="contact">
+        <div class="container">
+          <div class="contact-layout">
+
+            <div class="contact-details">
+              <h2 class="section-heading light">Let’s Start a Conversation</h2>
+              <p class="contact-intro">
+                Have questions about affiliating your church, transferring ministerial credentials, or inviting Dr. Scott &amp; Michelle Reece to minister at your congregation? Send us a message using the form and our leadership team will respond directly.
+              </p>
+
+              <div class="contact-info-list">
+                <div class="info-item">
+                  <span>Network Hub</span>
+                  <strong>River City Church · Quad Cities (Bettendorf, IA / Moline, IL)</strong>
+                </div>
+                <div class="info-item">
+                  <span>Official Web</span>
+                  <strong>azusanetwork.com</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-form-card">
+              <form id="contactForm" novalidate>
+                <h3>Send Us a Message</h3>
+                <p class="form-desc">Connect with our team or sign up for updates and gathering announcements.</p>
+
+                <div class="form-grid-two">
+                  <div class="field">
+                    <label for="contactName">Your Name *</label>
+                    <input type="text" id="contactName" required placeholder="Pastor / Leader Name" />
+                  </div>
+                  <div class="field">
+                    <label for="contactEmail">Email Address *</label>
+                    <input type="email" id="contactEmail" required placeholder="you@ministry.org" />
+                  </div>
+                </div>
+
+                <div class="form-grid-two">
+                  <div class="field">
+                    <label for="contactMinistry">Church or Ministry</label>
+                    <input type="text" id="contactMinistry" placeholder="Optional" />
+                  </div>
+                  <div class="field">
+                    <label for="contactTopic">Topic</label>
+                    <select id="contactTopic">
+                      <option value="membership">Membership &amp; Subscriptions</option>
+                      <option value="ordination">Ministerial Licensing &amp; Ordination</option>
+                      <option value="affiliation">Church Affiliation</option>
+                      <option value="speaking">Invite Dr. Scott &amp; Michelle Reece</option>
+                      <option value="newsletter">Join Email Updates</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="contactMessage">How can we pray for or serve you?</label>
+                  <textarea id="contactMessage" rows="4" placeholder="Tell us a bit about your ministry journey..."></textarea>
+                </div>
+
+                <label class="check-label">
+                  <input type="checkbox" id="contactNewsletter" checked />
+                  <span>Sign up for our email list for updates, revival reports, and upcoming gatherings.</span>
+                </label>
+
+                <button type="submit" class="btn btn-gold btn-block" id="contactSubmitBtn">
+                  Send Message
+                </button>
+                <div id="contactFeedback" class="form-feedback" role="status" aria-live="polite"></div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- =================================================================== -->
+    <!-- VIEW 2: SUBSCRIBER & LEADER PORTAL                                  -->
+    <!-- =================================================================== -->
+    <section id="portalView" class="view-section" aria-label="Member Portal">
+      <div class="portal-wrapper">
+        <div class="container">
+
+          <div class="portal-banner">
+            <div>
+              <span class="portal-plan-pill" id="portalTierBadge">Credentialed Minister Membership · Active</span>
+              <h1 class="portal-heading" id="portalWelcomeTitle">Welcome to the Azusa Member Portal</h1>
+              <p class="portal-subtext">
+                Join live mentoring roundtables with Apostle Scott Reece, download church governance resources, and manage your membership.
+              </p>
+            </div>
+            <div class="portal-banner-actions">
+              <button type="button" class="btn btn-gold" id="changePlanPortalBtn">
+                Change Membership Plan
+              </button>
+              <button type="button" class="btn btn-ghost-light" data-switch-public>
+                Back to Website
+              </button>
+            </div>
+          </div>
+
+          <div class="portal-tabs" role="tablist">
+            <button type="button" class="portal-tab active" data-portal-tab="overview">
+              Mentoring &amp; Roundtables
+            </button>
+            <button type="button" class="portal-tab" data-portal-tab="library">
+              Equipping Library
+            </button>
+            <button type="button" class="portal-tab" data-portal-tab="credentials">
+              Ordination &amp; Standing
+            </button>
+            <button type="button" class="portal-tab" data-portal-tab="billing">
+              Billing &amp; Webhook Settings
+            </button>
+          </div>
+
+          <!-- Tab 1: Overview -->
+          <div class="portal-tab-panel active" id="portal-tab-overview">
+            <div class="portal-columns">
+              <div class="portal-main">
+                <div class="portal-card">
+                  <div class="portal-card-head">
+                    <div>
+                      <span class="card-tag">Upcoming Live Session · Thursday, Dec 10 at 11:00 AM CST</span>
+                      <h2>Apostolic Leaders’ Roundtable with Dr. Scott Reece</h2>
+                    </div>
+                  </div>
+                  <p class="portal-card-body">
+                    Session Focus: <em>“Sustaining Revival Culture Without Burning Out Your Core Team.”</em> Includes 35 minutes of teaching followed by open pastoral Q&amp;A and prayer.
+                  </p>
+                  <div class="portal-btn-row">
+                    <button type="button" class="btn btn-navy" data-toast="Zoom meeting link copied to clipboard.">
+                      Copy Zoom Link
+                    </button>
+                    <button type="button" class="btn btn-outline-navy" data-toast="Session study guide downloaded.">
+                      Download Discussion Guide
+                    </button>
+                  </div>
+                </div>
+
+                <div class="portal-card">
+                  <h3>Recent Roundtable Replays</h3>
+                  <div class="replay-stack">
+                    <div class="replay-row">
+                      <div>
+                        <strong>Honoring Self-Governance While Walking in Spiritual Accountability</strong>
+                        <span>Apostle Scott Reece · 54 mins · Includes Board Charter Template</span>
+                      </div>
+                      <button type="button" class="btn btn-outline-navy btn-sm" data-toast="Playing session replay...">
+                        Watch Replay
+                      </button>
+                    </div>
+                    <div class="replay-row">
+                      <div>
+                        <strong>Relational Mentoring: Raising Up Sons and Daughters in the Local Church</strong>
+                        <span>Dr. Scott &amp; Michelle Reece · 48 mins · Study Notes Included</span>
+                      </div>
+                      <button type="button" class="btn btn-outline-navy btn-sm" data-toast="Playing session replay...">
+                        Watch Replay
+                      </button>
+                    </div>
+                    <div class="replay-row">
+                      <div>
+                        <strong>Prophetic Integrity &amp; Healthy Eldership in Spirit-Empowered Churches</strong>
+                        <span>Azusa Network Apostolic Presbytery · 62 mins</span>
+                      </div>
+                      <button type="button" class="btn btn-outline-navy btn-sm" data-toast="Playing session replay...">
+                        Watch Replay
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <aside class="portal-sidebar">
+                <div class="portal-card portal-card-dark">
+                  <span class="card-tag gold">Member Credential Card</span>
+                  <h3 id="memberCardName">Pastor / Ministry Partner</h3>
+                  <p class="sidebar-plan" id="memberCardPlan">Credentialed Minister ($59/mo)</p>
+                  <div class="standing-box">
+                    <div>
+                      <span>Credential ID</span>
+                      <strong id="memberIdCode">AZN-2026-8419</strong>
+                    </div>
+                    <div>
+                      <span>Standing</span>
+                      <strong class="gold-text">Good Standing</strong>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-gold btn-block btn-sm" data-toast="Official 2026–2027 Good Standing Certificate downloaded.">
+                    Download Certificate
+                  </button>
+                </div>
+
+                <div class="portal-card">
+                  <h3>Request 1-on-1 Elder Counsel</h3>
+                  <p class="sidebar-copy">
+                    Need confidential wisdom on a board decision, church transition, or personal season? Schedule a private call with Dr. Scott &amp; Michelle Reece or an Azusa Network elder.
+                  </p>
+                  <button type="button" class="btn btn-outline-navy btn-block btn-sm" data-toast="Counsel request sent. Our office will reach out with available times.">
+                    Schedule Elder Call
+                  </button>
+                </div>
+              </aside>
+            </div>
+          </div>
+
+          <!-- Tab 2: Equipping Library -->
+          <div class="portal-tab-panel" id="portal-tab-library">
+            <div class="portal-card">
+              <div class="library-top">
+                <div>
+                  <h2>Ministry Equipping Library</h2>
+                  <p class="portal-card-body">Download editable church governance templates, leadership training courses, and ordination study guides.</p>
+                </div>
+                <div class="filter-group">
+                  <button type="button" class="filter-pill active" data-filter-res="all">All</button>
+                  <button type="button" class="filter-pill" data-filter-res="governance">Governance &amp; Bylaws</button>
+                  <button type="button" class="filter-pill" data-filter-res="mentoring">Leadership Courses</button>
+                  <button type="button" class="filter-pill" data-filter-res="revival">Ministry Teams</button>
+                </div>
+              </div>
+
+              <div class="resource-grid">
+                <article class="resource-box" data-res-cat="governance">
+                  <span class="res-category">Bylaws &amp; Governance Kit</span>
+                  <h3>Autonomous Local Church Bylaws &amp; Apostolic Advisory Charter</h3>
+                  <p>Editable legal and ecclesiastical templates protecting local self-governance while establishing clear pastoral covering.</p>
+                  <button type="button" class="btn btn-outline-navy btn-sm" data-toast="Downloaded: Autonomous Local Church Bylaws Kit">Download Files</button>
+                </article>
+
+                <article class="resource-box" data-res-cat="mentoring">
+                  <span class="res-category">6-Part Video Course</span>
+                  <h3>Relational Mentoring: Equipping Leaders Without Controlling Them</h3>
+                  <p>Taught by Apostle Dr. Scott Reece. Includes team discussion guides for training elders, deacons, and ministry directors.</p>
+                  <button type="button" class="btn btn-outline-navy btn-sm" data-toast="Opened course: Relational Mentoring">Start Course</button>
+                </article>
+
+                <article class="resource-box" data-res-cat="revival">
+                  <span class="res-category">Team Training Manual</span>
+                  <h3>Altar Ministry &amp; Prophetic Protocol Handbook</h3>
+                  <p>Practical biblical guidelines for training prayer and altar teams to minister with sensitivity, order, and Holy Spirit power.</p>
+                  <button type="button" class="btn btn-outline-navy btn-sm" data-toast="Downloaded: Altar Ministry Handbook PDF">Download PDF</button>
+                </article>
+
+                <article class="resource-box" data-res-cat="governance">
+                  <span class="res-category">Financial Stewardship</span>
+                  <h3>Pastoral Compensation, Housing Allowance &amp; 501(c)(3) Board Checklist</h3>
+                  <p>Annual compliance templates for church treasurers and independent compensation review committees.</p>
+                  <button type="button" class="btn btn-outline-navy btn-sm" data-toast="Downloaded: Financial Stewardship Checklist">Download Kit</button>
+                </article>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 3: Ordination -->
+          <div class="portal-tab-panel" id="portal-tab-credentials">
+            <div class="portal-card">
+              <h2>Ministerial Licensing &amp; Ordination Progress</h2>
+              <p class="portal-card-body">Track your ordination milestones and annual credential renewal with The Azusa Network.</p>
+
+              <div class="checklist-stack">
+                <label class="check-card">
+                  <input type="checkbox" checked />
+                  <div>
+                    <strong>1. Covenant Application &amp; Statement of Faith</strong>
+                    <span>Completed · Doctrinal alignment and ministry testimony on file</span>
+                  </div>
+                </label>
+                <label class="check-card">
+                  <input type="checkbox" checked />
+                  <div>
+                    <strong>2. Active Network Membership &amp; Stewardship</strong>
+                    <span>Completed · Monthly or annual membership active</span>
+                  </div>
+                </label>
+                <label class="check-card">
+                  <input type="checkbox" />
+                  <div>
+                    <strong>3. Core Equipping Track (Three Pillars of The Azusa Network)</strong>
+                    <span>In Progress · Complete the 3 video modules in the Equipping Library</span>
+                  </div>
+                </label>
+                <label class="check-card">
+                  <input type="checkbox" />
+                  <div>
+                    <strong>4. Elder Presbytery Interview &amp; Public Commissioning</strong>
+                    <span>Next commissioning service: February 18–20, 2027 in Bettendorf, IA</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 4: Billing & Webhook Settings -->
+          <div class="portal-tab-panel" id="portal-tab-billing">
+            <div class="portal-card">
+              <h2>Membership &amp; Stewardship Billing</h2>
+              <div class="billing-panel-row">
+                <div>
+                  <h3 id="billingPlanTitle">Credentialed Minister Membership</h3>
+                  <p id="billingPlanRate">$59.00 / month · Active Standing</p>
+                </div>
+                <div class="portal-btn-row">
+                  <button type="button" class="btn btn-gold" data-open-modal="application" data-tier="church">
+                    Update or Upgrade Plan
+                  </button>
+                  <button type="button" class="btn btn-outline-navy" data-toast="Annual tax-deductible contribution receipt downloaded.">
+                    Download Giving Statement
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Webhook Testing & Configuration Panel -->
+            <div class="portal-card">
+              <h2>Webhook Integration („Notify Me at Launch“ &amp; Forms)</h2>
+              <p class="portal-card-body">
+                All submissions from <strong>Notify Me at Launch</strong>, <strong>Send Us a Message</strong>, and <strong>Membership Checkout</strong> are sent via <code>POST /api/webhook</code>. You can set the <code>WEBHOOK_URL</code> environment variable in Vercel, or paste your webhook URL below to test live delivery immediately:
+              </p>
+              <form id="webhookConfigForm" class="webhook-config-row" novalidate>
+                <input type="url" id="customWebhookInput" placeholder="https://hooks.zapier.com/... or https://make.com/..." />
+                <button type="submit" class="btn btn-navy">Save &amp; Test Webhook</button>
+              </form>
+              <p id="webhookStatusOutput" class="form-feedback" role="status" aria-live="polite"></p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Site Footer (Email Hidden) -->
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <div class="brand" style="margin-bottom: 1rem;">
+            <div class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 100 100" fill="none">
+                <circle cx="50" cy="50" r="44" stroke="currentColor" stroke-width="5" />
+                <path d="M51 18C43 29 34 39 36 53C37.5 64 46 72 56 71C66 70 72 60 70 49C68.5 41 62 36 61 29C58 35 55 39 57 46C58.5 51 55 57 50 57C45 57 43 51 45 44C47 36 53 28 51 18Z" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M35 67C40 76 51 80 61 75" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" />
+              </svg>
+            </div>
+            <div class="brand-type">
+              <span class="brand-name">The Azusa Network</span>
+              <span class="brand-sub">Of Churches &amp; Ministries</span>
+            </div>
+          </div>
+          <p class="footer-quote">
+            “Fostering authentic relationships and Spirit-empowered ministry growth, advancing the kingdom of God together.”
+          </p>
+          <p class="footer-leader">Apostle Dr. Scott &amp; Michelle Reece · Overseers</p>
+        </div>
+
+        <div class="footer-nav">
+          <h4>Navigation</h4>
+          <a href="#values">Our Core Values</a>
+          <a href="#leadership">Dr. Scott &amp; Michelle Reece</a>
+          <a href="#subscriptions">Membership Plans</a>
+          <a href="#credentialing">Ministerial Ordination</a>
+          <a href="#gatherings">Upcoming Gatherings</a>
+        </div>
+
+        <div class="footer-contact">
+          <h4>Connect</h4>
+          <a href="#contact">Send a Message Online</a>
+          <a href="https://azusanetwork.com">azusanetwork.com</a>
+          <span class="footer-location">Quad Cities · River City Church</span>
+          <div class="footer-socials" aria-label="Social Media">
+            <a href="#contact" aria-label="Facebook" class="social-link">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"/></svg>
+            </a>
+            <a href="#contact" aria-label="Instagram" class="social-link">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+            </a>
+            <a href="#contact" aria-label="X / Twitter" class="social-link">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container footer-bottom">
+        <span>&copy; 2026 The Azusa Network of Churches &amp; Ministries. All Rights Reserved.</span>
+        <button type="button" class="footer-lock-link" data-lock-site>Return to Coming Soon Landing Page</button>
+      </div>
+    </footer>
+
+  </div><!-- /#siteWrapper -->
+
+  <!-- ===================================================================== -->
+  <!-- SUBSCRIPTION & MEMBERSHIP CHECKOUT MODAL                              -->
+  <!-- ===================================================================== -->
+  <div class="modal-backdrop" id="subscriptionModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title" id="modalTitle">Join The Azusa Network</h2>
+          <p class="modal-subtitle">Select your membership plan and activate instant portal access.</p>
+        </div>
+        <button type="button" class="modal-close" id="closeModalBtn" aria-label="Close">&times;</button>
+      </div>
+
+      <form id="subscriptionCheckoutForm" class="modal-body" novalidate>
+        <div class="modal-tier-grid">
+          <label class="modal-tier-choice">
+            <input type="radio" name="selectedTier" value="associate" />
+            <div class="choice-box">
+              <strong>Associate Leader</strong>
+              <span data-modal-price="associate">$29/mo</span>
+            </div>
+          </label>
+          <label class="modal-tier-choice">
+            <input type="radio" name="selectedTier" value="minister" checked />
+            <div class="choice-box">
+              <strong>Credentialed Minister</strong>
+              <span data-modal-price="minister">$59/mo</span>
+            </div>
+          </label>
+          <label class="modal-tier-choice">
+            <input type="radio" name="selectedTier" value="church" />
+            <div class="choice-box">
+              <strong>Affiliated Church</strong>
+              <span data-modal-price="church">$149/mo</span>
+            </div>
+          </label>
+        </div>
+
+        <div class="form-grid-two">
+          <div class="field">
+            <label for="subFullName">Full Name &amp; Title *</label>
+            <input type="text" id="subFullName" required placeholder="Pastor David Miller" />
+          </div>
+          <div class="field">
+            <label for="subEmail">Email Address *</label>
+            <input type="email" id="subEmail" required placeholder="david@gracechurch.org" />
+          </div>
+        </div>
+
+        <div class="form-grid-two">
+          <div class="field">
+            <label for="subOrg">Church or Ministry Name *</label>
+            <input type="text" id="subOrg" required placeholder="Grace Fellowship" />
+          </div>
+          <div class="field">
+            <label for="subCity">City &amp; State *</label>
+            <input type="text" id="subCity" required placeholder="Davenport, IA" />
+          </div>
+        </div>
+
+        <div class="payment-section">
+          <div class="payment-head">
+            <span>Payment Method</span>
+            <div class="payment-toggle">
+              <button type="button" class="pay-tab active" data-pay-method="card">Card</button>
+              <button type="button" class="pay-tab" data-pay-method="ach">ACH Bank Transfer</button>
+            </div>
+          </div>
+
+          <div id="cardPaymentFields">
+            <div class="field">
+              <label for="cardNum">Card Number (Local Preview)</label>
+              <input type="text" id="cardNum" value="•••• •••• •••• 4242" readonly />
+            </div>
+            <div class="form-grid-two">
+              <div class="field">
+                <label for="cardExp">Expiration</label>
+                <input type="text" id="cardExp" value="08 / 29" readonly />
+              </div>
+              <div class="field">
+                <label for="cardCvc">CVC</label>
+                <input type="text" id="cardCvc" value="842" readonly />
+              </div>
+            </div>
+          </div>
+
+          <div id="achPaymentFields" class="hidden">
+            <div class="form-grid-two">
+              <div class="field">
+                <label for="achRouting">Routing Number (Preview)</label>
+                <input type="text" id="achRouting" value="073000228" readonly />
+              </div>
+              <div class="field">
+                <label for="achAccount">Church Checking Account</label>
+                <input type="text" id="achAccount" value="••••••9104" readonly />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <label class="check-label">
+          <input type="checkbox" id="covenantAgree" required checked />
+          <span>I desire to walk in relational mentoring, spiritual accountability, and Spirit-empowered leadership with The Azusa Network.</span>
+        </label>
+
+        <div class="modal-footer">
+          <div class="modal-total">
+            <span>Membership Total</span>
+            <strong id="modalTotalAmount">$59.00 / month</strong>
+          </div>
+          <button type="submit" class="btn btn-gold btn-lg">
+            Complete Membership &amp; Open Portal
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Banner -->
+  <div id="toastNotification" class="toast-banner" role="status" aria-live="polite"></div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

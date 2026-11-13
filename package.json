@@ -1,0 +1,9 @@
+{
+  "name": "azusa-network-web",
+  "version": "1.0.0",
+  "description": "The Azusa Network of Churches & Ministries — Official Website, Subscription Platform & Leader Portal",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  }
+}
