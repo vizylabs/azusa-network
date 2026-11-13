@@ -54,40 +54,55 @@
   const DEFAULT_WEBHOOK_URL = 'https://move.vizylabs.com/webhook/506ffde9-4381-4fae-8377-375f71b9d0d6';
   const DEFAULT_WEBHOOK_SOURCE = 'azusanetwork.com';
 
-  async function sendToWebhook(payload) {
+  async function sendToWebhook(raw) {
     let savedWebhookUrl = DEFAULT_WEBHOOK_URL;
     try {
       savedWebhookUrl = localStorage.getItem(STORAGE_WEBHOOK_KEY) || DEFAULT_WEBHOOK_URL;
     } catch (_) {}
 
-    const targetWebhook = payload.webhookUrl || savedWebhookUrl || DEFAULT_WEBHOOK_URL;
+    const targetWebhook = raw.webhookUrl || savedWebhookUrl || DEFAULT_WEBHOOK_URL;
+
+    // Exact n8n webhook body structure expected by move.vizylabs.com
     const fullPayload = {
-      ...payload,
-      source: DEFAULT_WEBHOOK_SOURCE,
+      name: raw.name || 'Launch Notification Subscriber',
+      company: raw.company || raw.ministry || 'Azusa Network',
+      email: raw.email || '',
+      projectType: raw.projectType || raw.topic || raw.event || 'website-inquiry',
+      message:
+        raw.message ||
+        (raw.event === 'launch_notify'
+          ? 'Requested launch notification on azusanetwork.com Coming Soon page.'
+          : 'Submitted via azusanetwork.com'),
       submittedAt: new Date().toISOString(),
+      source: DEFAULT_WEBHOOK_SOURCE,
     };
 
-    // 1. Try /api/webhook serverless proxy first (avoids CORS issues when backend is active)
+    // 1. Call /api/webhook serverless route on Vercel (sends via Node fetch with "user-agent": "node")
     try {
       const apiRes = await fetch('/api/webhook', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...fullPayload,
-          webhookUrl: targetWebhook || undefined,
-        }),
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(
+          raw.webhookUrl ? { ...fullPayload, webhookUrl: targetWebhook } : fullPayload
+        ),
       });
       if (apiRes.ok) {
         return await apiRes.json();
       }
     } catch (_) {}
 
-    // 2. Direct client-side delivery to the webhook URL (for static preview deployments)
+    // 2. Direct client-side fallback (for static previews without /api/webhook)
     if (targetWebhook && /^https?:\/\//i.test(targetWebhook)) {
       try {
         const directRes = await fetch(targetWebhook, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
           body: JSON.stringify(fullPayload),
         });
         return {
@@ -95,23 +110,8 @@
           forwarded: directRes.ok,
           webhookStatus: directRes.status,
         };
-      } catch (_) {
-        // Fallback for webhooks without CORS headers (e.g. Zapier / Make / Discord / n8n)
-        try {
-          await fetch(targetWebhook, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
-            body: JSON.stringify(fullPayload),
-          });
-          return {
-            ok: true,
-            forwarded: true,
-            webhookStatus: 'sent (no-cors)',
-          };
-        } catch (err2) {
-          return { ok: false, error: err2 && err2.message ? err2.message : 'Webhook error' };
-        }
+      } catch (err2) {
+        return { ok: false, error: err2 && err2.message ? err2.message : 'Webhook error' };
       }
     }
 
@@ -229,8 +229,11 @@
       }
 
       await sendToWebhook({
-        event: 'launch_notify',
+        name: 'Launch Notification Subscriber',
+        company: 'Azusa Network Launch List',
         email: emailVal,
+        projectType: 'launch-notify',
+        message: 'Requested launch notification on azusanetwork.com Coming Soon page.',
       });
 
       if (notifySubmitBtn) {
@@ -525,16 +528,11 @@
       };
 
       await sendToWebhook({
-        event: 'membership_signup',
         name: fullName,
+        company: state.subscriber.org,
         email,
-        ministry: state.subscriber.org,
-        city,
-        tier: state.selectedTier,
-        tierName: tierInfo.name,
-        billingCadence: state.billingCadence,
-        rate: rateString,
-        memberId,
+        projectType: `membership-${state.selectedTier}`,
+        message: `New ${tierInfo.name} membership (${rateString}) | City: ${city || 'N/A'} | Member ID: ${memberId}`,
       });
 
       const portalTierBadge = document.getElementById('portalTierBadge');
@@ -640,13 +638,11 @@
       }
 
       await sendToWebhook({
-        event: 'contact_message',
         name,
+        company: ministry || 'Independent Ministry',
         email,
-        ministry,
-        topic,
-        message,
-        newsletter,
+        projectType: topic,
+        message: newsletter ? `${message} (Opted into newsletter)` : message,
       });
 
       if (contactSubmitBtn) {
@@ -690,8 +686,10 @@
       }
 
       const result = await sendToWebhook({
-        event: 'webhook_test',
+        name: 'Azusa Network Test',
+        company: 'The Azusa Network',
         email: 'test@azusanetwork.com',
+        projectType: 'webhook-test',
         message: 'Test webhook delivery from The Azusa Network platform',
         webhookUrl: urlVal,
       });
