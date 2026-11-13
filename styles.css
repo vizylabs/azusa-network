@@ -30,7 +30,7 @@
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Layout & Transitions */
-  --container: 1280px;
+  --container: 1460px;
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 18px;
@@ -206,11 +206,11 @@ img {
 
 .coming-soon-grid {
   display: grid;
-  grid-template-columns: 1.15fr 0.9fr;
-  gap: clamp(2.5rem, 5vw, 4.5rem);
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(2.25rem, 4.5vw, 4.5rem);
   align-items: center;
   margin: auto 0;
-  padding: 3rem 0;
+  padding: 2.5rem 0;
 }
 
 .coming-soon-badge-row {
@@ -321,20 +321,22 @@ img {
   box-shadow: var(--shadow-elevated);
 }
 
-.cs-couple-photo-frame {
-  aspect-ratio: 5 / 4;
+.cs-couple-photo-frame,
+.hero-couple-photo-frame {
+  aspect-ratio: 16 / 10;
   border-radius: var(--radius-md);
   overflow: hidden;
   border: 2px solid rgba(197, 159, 84, 0.55);
   background: var(--navy-deep);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.35rem;
 }
 
-.cs-couple-photo-frame img {
+.cs-couple-photo-frame img,
+.hero-couple-photo-frame img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center center;
 }
 
 .cs-quote {
@@ -773,8 +775,8 @@ img {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 1.15fr 0.95fr;
-  gap: clamp(2.25rem, 5vw, 4.5rem);
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(2.25rem, 4.5vw, 4.5rem);
   align-items: center;
 }
 
@@ -1080,8 +1082,8 @@ img {
 
 .leadership-split {
   display: grid;
-  grid-template-columns: 0.95fr 1.15fr;
-  gap: clamp(2.5rem, 5vw, 4rem);
+  grid-template-columns: 1.05fr 1.1fr;
+  gap: clamp(2.5rem, 4.5vw, 4.25rem);
   align-items: center;
 }
 
@@ -1094,7 +1096,7 @@ img {
 }
 
 .couple-img-wrap {
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
   background: var(--navy-deep);
 }
@@ -1103,7 +1105,7 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center center;
   transition: transform 0.45s var(--ease);
 }
 
@@ -2230,10 +2232,10 @@ img {
 }
 
 /* ==========================================================================
-   IPAD / TABLET RESPONSIVE ARCHITECTURE (<= 1120px)
+   IPAD / TABLET RESPONSIVE ARCHITECTURE (<= 880px)
    ========================================================================== */
 
-@media (max-width: 1120px) {
+@media (max-width: 880px) {
   .primary-nav {
     display: none;
   }
