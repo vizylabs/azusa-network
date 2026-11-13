@@ -50,8 +50,9 @@
   // =========================================================================
   // WEBHOOK DISPATCHER (Direct Webhook + /api/webhook Serverless Route)
   // =========================================================================
-  // Default webhook URL (can also be set in Member Portal -> Billing & Webhook Settings)
-  const DEFAULT_WEBHOOK_URL = '';
+  // Default webhook URL (can also be overridden via Vercel env var WEBHOOK_URL or in Member Portal)
+  const DEFAULT_WEBHOOK_URL = 'https://move.vizylabs.com/webhook/506ffde9-4381-4fae-8377-375f71b9d0d6';
+  const DEFAULT_WEBHOOK_SOURCE = 'azusanetwork.com';
 
   async function sendToWebhook(payload) {
     let savedWebhookUrl = DEFAULT_WEBHOOK_URL;
@@ -59,11 +60,11 @@
       savedWebhookUrl = localStorage.getItem(STORAGE_WEBHOOK_KEY) || DEFAULT_WEBHOOK_URL;
     } catch (_) {}
 
-    const targetWebhook = payload.webhookUrl || savedWebhookUrl || '';
+    const targetWebhook = payload.webhookUrl || savedWebhookUrl || DEFAULT_WEBHOOK_URL;
     const fullPayload = {
-      source: 'azusanetwork.com',
-      submittedAt: new Date().toISOString(),
       ...payload,
+      source: DEFAULT_WEBHOOK_SOURCE,
+      submittedAt: new Date().toISOString(),
     };
 
     // 1. Try /api/webhook serverless proxy first (avoids CORS issues when backend is active)

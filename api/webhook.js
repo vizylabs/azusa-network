@@ -1,8 +1,11 @@
 /**
  * Vercel Serverless Function: /api/webhook
  * Receives form submissions ("Notify Me at Launch", "Contact Us", "Membership Checkout")
- * and forwards them as JSON to the configured WEBHOOK_URL.
+ * and forwards them as JSON to the configured WEBHOOK_URL with source = WEBHOOK_SOURCE.
  */
+
+const DEFAULT_WEBHOOK_URL = 'https://move.vizylabs.com/webhook/506ffde9-4381-4fae-8377-375f71b9d0d6';
+const DEFAULT_WEBHOOK_SOURCE = 'azusanetwork.com';
 
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -19,14 +22,20 @@ module.exports = async function handler(req, res) {
 
   try {
     const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
-    const payload = {
-      source: 'azusanetwork.com',
-      submittedAt: new Date().toISOString(),
-      ...body,
-    };
+    const { webhookUrl: clientWebhookUrl, ...cleanBody } = body;
 
-    // Configure via Vercel Environment Variable WEBHOOK_URL (or customWebhookUrl in payload for testing)
-    const webhookUrl = process.env.WEBHOOK_URL || process.env.AZUSA_WEBHOOK_URL || body.webhookUrl || '';
+    const source = process.env.WEBHOOK_SOURCE || DEFAULT_WEBHOOK_SOURCE;
+    const webhookUrl =
+      process.env.WEBHOOK_URL ||
+      process.env.AZUSA_WEBHOOK_URL ||
+      clientWebhookUrl ||
+      DEFAULT_WEBHOOK_URL;
+
+    const payload = {
+      ...cleanBody,
+      source,
+      submittedAt: cleanBody.submittedAt || new Date().toISOString(),
+    };
 
     let forwarded = false;
     let webhookStatus = null;
