@@ -11,25 +11,25 @@
 
   const TIER_CATALOG = {
     associate: {
-      name: 'Associate Leader Membership',
-      shortBadge: 'Associate Leader Membership · Active',
+      name: 'Associate Minister',
+      shortBadge: 'Associate Minister · Active',
       monthly: 29,
-      annualPerMonth: 24,
-      annualTotal: 290,
+      annualPerMonth: 29,
+      annualTotal: 348,
     },
     minister: {
-      name: 'Credentialed Minister Membership',
-      shortBadge: 'Credentialed Minister Membership · Active',
+      name: 'Credentialed Minister',
+      shortBadge: 'Credentialed Minister · Active',
       monthly: 59,
-      annualPerMonth: 49,
-      annualTotal: 590,
+      annualPerMonth: 59,
+      annualTotal: 708,
     },
     church: {
       name: 'Affiliated Church & Ministry',
       shortBadge: 'Affiliated Church & Ministry · Active',
       monthly: 149,
-      annualPerMonth: 124,
-      annualTotal: 1490,
+      annualPerMonth: 149,
+      annualTotal: 1788,
     },
   };
 
@@ -412,17 +412,29 @@
   }
 
   // Subscription Modal Opening & Closing
+  const sigSelectedLevelInput = document.getElementById('sigSelectedLevel');
+  const sigDateInput = document.getElementById('sigDate');
+  const sectionChurchMinistry = document.getElementById('sectionChurchMinistry');
+  const sectionMinisterialCredentials = document.getElementById('sectionMinisterialCredentials');
+
+  if (sigDateInput && !sigDateInput.value) {
+    sigDateInput.value = new Date().toISOString().split('T')[0];
+  }
+
   function updateModalTotalDisplay() {
-    if (!modalTotalAmount) return;
-    if (state.customAmount && state.selectedTier === 'church') {
-      modalTotalAmount.textContent = `$${state.customAmount}.00 / month (2% Church Tithe Partnership)`;
-      return;
-    }
     const tierObj = TIER_CATALOG[state.selectedTier] || TIER_CATALOG.minister;
-    if (state.billingCadence === 'annual') {
-      modalTotalAmount.textContent = `$${tierObj.annualTotal.toLocaleString()}.00 / year`;
-    } else {
-      modalTotalAmount.textContent = `$${tierObj.monthly}.00 / month`;
+    const feeText = `$${tierObj.monthly}.00 / month`;
+    if (modalTotalAmount) {
+      modalTotalAmount.textContent = feeText;
+    }
+    if (sigSelectedLevelInput) {
+      sigSelectedLevelInput.value = `${tierObj.name} — $${tierObj.monthly}.00/mo`;
+    }
+    if (sectionChurchMinistry) {
+      sectionChurchMinistry.classList.toggle('section-highlighted', state.selectedTier === 'church');
+    }
+    if (sectionMinisterialCredentials) {
+      sectionMinisterialCredentials.classList.toggle('section-highlighted', state.selectedTier === 'minister');
     }
   }
 
@@ -496,44 +508,129 @@
     });
   });
 
-  // Checkout Submission -> Sends to /api/webhook & Opens Portal
+  // Official Network Affiliation Application & Covenant Submission -> Sends to /api/webhook & Opens Portal
   if (subscriptionCheckoutForm) {
     subscriptionCheckoutForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const fullName = document.getElementById('subFullName').value.trim();
-      const email = document.getElementById('subEmail').value.trim();
-      const org = document.getElementById('subOrg').value.trim();
-      const city = document.getElementById('subCity').value.trim();
+      const val = (id) => {
+        const el = document.getElementById(id);
+        return el ? el.value.trim() : '';
+      };
+      const checked = (id) => {
+        const el = document.getElementById(id);
+        return el ? Boolean(el.checked) : false;
+      };
 
-      if (!fullName || !email) {
-        showToast('Please enter your name and email address to complete your membership.');
+      const fullName = val('subFullName');
+      const preferredName = val('subPreferredName');
+      const email = val('subEmail');
+      const phone = val('subPhone');
+      const address = val('subAddress');
+      const city = val('subCity');
+      const st = val('subState');
+      const zip = val('subZip');
+      const org = val('subOrg');
+      const position = val('subPosition');
+      const website = val('subWebsite');
+
+      // Section 3: Church or Ministry Info
+      const orgLegalName = val('orgLegalName');
+      const orgPublicName = val('orgPublicName');
+      const orgYearEst = val('orgYearEst');
+      const orgPrimaryLeader = val('orgPrimaryLeader');
+      const orgAddress = val('orgAddress');
+      const orgWebsite = val('orgWebsite');
+      const orgType = val('orgType');
+      const orgSizeOrOther = val('orgSizeOrOther');
+      const orgMissionDesc = val('orgMissionDesc');
+      const orgBoardApproval = val('orgBoardApproval');
+      const orgAuthRep = val('orgAuthRep');
+      const orgAuthTitle = val('orgAuthTitle');
+
+      // Section 4: Spiritual Background
+      const bgRelationshipChrist = val('bgRelationshipChrist');
+      const bgWhyAncm = val('bgWhyAncm');
+      const bgHopingToReceive = val('bgHopingToReceive');
+      const bgGiftsAndService = val('bgGiftsAndService');
+      const bgOtherAffiliation = val('bgOtherAffiliation');
+      const bgOtherOrgName = val('bgOtherOrgName');
+
+      // Section 5: Doctrinal Alignment
+      const docQuestions = val('docQuestions');
+      const allDoctrinesAffirmed =
+        checked('docAffirm1') &&
+        checked('docAffirm2') &&
+        checked('docAffirm3') &&
+        checked('docAffirm4') &&
+        checked('docAffirm5');
+
+      // Section 6: Ministerial Credentials
+      const credStanding = val('credStanding');
+      const credIssuingOrg = val('credIssuingOrg');
+      const credYearIssued = val('credYearIssued');
+      const credCurrentStatus = val('credCurrentStatus');
+      const credYearsMinistry = val('credYearsMinistry');
+
+      // Section 8 & 9: Agreements & Signature
+      const billingAuthAgree = checked('billingAuthAgree');
+      const covenantAgree = checked('covenantAgree');
+      const sigRepName = val('sigRepName') || fullName;
+      const sigTitle = val('sigTitle') || position;
+      const sigElectronic = val('sigElectronic') || fullName;
+      const sigDate = val('sigDate') || new Date().toISOString().split('T')[0];
+
+      if (!fullName || !email || !phone) {
+        showToast('Please enter your Full Legal Name, Email Address, and Telephone Number in Section 2.');
+        return;
+      }
+
+      if (!allDoctrinesAffirmed || !billingAuthAgree || !covenantAgree) {
+        showToast('Please affirm Doctrinal Alignment (Section 5), Billing Authorization (Section 8), and Applicant Affirmation (Section 9).');
         return;
       }
 
       const tierInfo = TIER_CATALOG[state.selectedTier] || TIER_CATALOG.minister;
-      const rateString = state.customAmount
-        ? `$${state.customAmount}/mo (Custom Church Seed)`
-        : state.billingCadence === 'annual'
-        ? `$${tierInfo.annualTotal}/yr`
-        : `$${tierInfo.monthly}/mo`;
-
-      const memberId = `AZN-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+      const rateString = `$${tierInfo.monthly}.00 / month`;
+      const memberId = `ANCM-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+      const companyName = org || orgPublicName || orgLegalName || 'Azusa Partner Ministry';
 
       state.subscriber = {
         name: fullName,
         email: email,
-        org: org || 'Azusa Partner Ministry',
+        org: companyName,
         tier: state.selectedTier,
         memberId,
       };
 
+      const appSubmitBtn = document.getElementById('appSubmitBtn');
+      if (appSubmitBtn) {
+        appSubmitBtn.disabled = true;
+        appSubmitBtn.textContent = 'Submitting Application...';
+      }
+
+      const detailedMessage = [
+        `=== ANCM NETWORK AFFILIATION APPLICATION (${memberId}) ===`,
+        `[SECTION 1 — AFFILIATION LEVEL]: ${tierInfo.name} (${rateString})`,
+        `[SECTION 2 — APPLICANT INFO]: Name: ${fullName} (Preferred: ${preferredName || 'N/A'}) | Email: ${email} | Phone: ${phone} | Address: ${address}, ${city}, ${st} ${zip} | Church/Ministry: ${companyName} | Position: ${position || 'N/A'} | Web/Social: ${website || 'N/A'}`,
+        `[SECTION 3 — CHURCH/MINISTRY INFO]: Legal Name: ${orgLegalName || 'N/A'} | Public Name: ${orgPublicName || 'N/A'} | Est: ${orgYearEst || 'N/A'} | Leader: ${orgPrimaryLeader || 'N/A'} | Type: ${orgType || 'N/A'} (${orgSizeOrOther || 'N/A'}) | Mission: ${orgMissionDesc || 'N/A'} | Leadership Approved: ${orgBoardApproval || 'N/A'} (${orgAuthRep || 'N/A'}, ${orgAuthTitle || 'N/A'})`,
+        `[SECTION 4 — SPIRITUAL BACKGROUND]: (1) Testimony/Ministry: ${bgRelationshipChrist || 'N/A'} | (2) Why ANCM: ${bgWhyAncm || 'N/A'} | (3) Hoping to Receive: ${bgHopingToReceive || 'N/A'} | (4) Gifts/Service: ${bgGiftsAndService || 'N/A'} | (5) Other Affiliation: ${bgOtherAffiliation} (${bgOtherOrgName || 'None'})`,
+        `[SECTION 5 — DOCTRINAL ALIGNMENT]: All 5 ANCM Doctrinal Statements Affirmed: Yes | Doctrinal Questions: ${docQuestions || 'None'}`,
+        `[SECTION 6 — MINISTERIAL CREDENTIALS]: Standing: ${credStanding || 'N/A'} | Issuing Org: ${credIssuingOrg || 'N/A'} | Year: ${credYearIssued || 'N/A'} | Status: ${credCurrentStatus || 'N/A'} | Active Years: ${credYearsMinistry || 'N/A'}`,
+        `[SECTIONS 7–9 — COVENANT, BILLING & AFFIRMATION]: Affirmed & Accepted | Representative: ${sigRepName} (${sigTitle || 'N/A'}) | Signature: ${sigElectronic} | Date: ${sigDate}`,
+      ].join('\n');
+
       await sendToWebhook({
         name: fullName,
-        company: state.subscriber.org,
+        company: companyName,
         email,
-        projectType: `membership-${state.selectedTier}`,
-        message: `New ${tierInfo.name} membership (${rateString}) | City: ${city || 'N/A'} | Member ID: ${memberId}`,
+        projectType: `${tierInfo.name} ($${tierInfo.monthly}.00/mo)`,
+        message: detailedMessage,
       });
+
+      if (appSubmitBtn) {
+        appSubmitBtn.disabled = false;
+        appSubmitBtn.textContent = 'Submit Affiliation Application & Covenant';
+      }
 
       const portalTierBadge = document.getElementById('portalTierBadge');
       if (portalTierBadge) portalTierBadge.textContent = tierInfo.shortBadge;
@@ -555,12 +652,12 @@
 
       const billingPlanRate = document.getElementById('billingPlanRate');
       if (billingPlanRate) {
-        billingPlanRate.textContent = `${rateString} · Active Standing (${state.subscriber.org})`;
+        billingPlanRate.textContent = `${rateString} · Application Submitted (${state.subscriber.org})`;
       }
 
       closeSubscriptionModal();
       setView('portal');
-      showToast(`Membership activated for ${fullName}. Welcome to The Azusa Network!`);
+      showToast(`Affiliation Application (${memberId}) submitted for ${fullName}!`);
     });
   }
 
