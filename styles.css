@@ -2215,6 +2215,89 @@ img {
   line-height: 1.5;
 }
 
+.stripe-billing-summary-card {
+  margin-top: 1rem;
+  background: linear-gradient(135deg, #0B1E35 0%, #133154 100%);
+  color: var(--text-on-navy);
+  border: 1px solid rgba(197, 159, 84, 0.45);
+  border-radius: var(--radius-sm);
+  padding: 1.15rem 1.35rem;
+}
+
+.stripe-summary-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--border-on-navy);
+}
+
+.stripe-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gold-primary);
+  margin-bottom: 0.2rem;
+}
+
+.stripe-summary-top h4 {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  color: #fff;
+}
+
+.stripe-summary-top p {
+  font-size: 0.82rem;
+  color: var(--text-muted-navy);
+}
+
+.stripe-summary-price {
+  text-align: right;
+}
+
+.stripe-summary-price strong {
+  display: block;
+  font-size: 1.55rem;
+  color: var(--gold-primary);
+  line-height: 1.1;
+}
+
+.stripe-summary-price span {
+  font-size: 0.78rem;
+  color: var(--text-muted-navy);
+}
+
+.stripe-cards-row {
+  padding-top: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-muted-navy);
+}
+
+.card-brand-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.card-brand-pills span {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+}
+
 .affirmation-bullet-list {
   padding-left: 1.25rem;
   margin-bottom: 1rem;

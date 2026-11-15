@@ -416,6 +416,8 @@
   const sigDateInput = document.getElementById('sigDate');
   const sectionChurchMinistry = document.getElementById('sectionChurchMinistry');
   const sectionMinisterialCredentials = document.getElementById('sectionMinisterialCredentials');
+  const sec8SelectedPlanName = document.getElementById('sec8SelectedPlanName');
+  const sec8SelectedPlanPrice = document.getElementById('sec8SelectedPlanPrice');
 
   if (sigDateInput && !sigDateInput.value) {
     sigDateInput.value = new Date().toISOString().split('T')[0];
@@ -429,6 +431,12 @@
     }
     if (sigSelectedLevelInput) {
       sigSelectedLevelInput.value = `${tierObj.name} — $${tierObj.monthly}.00/mo`;
+    }
+    if (sec8SelectedPlanName) {
+      sec8SelectedPlanName.textContent = `${tierObj.name} Affiliation`;
+    }
+    if (sec8SelectedPlanPrice) {
+      sec8SelectedPlanPrice.textContent = `$${tierObj.monthly}.00`;
     }
     if (sectionChurchMinistry) {
       sectionChurchMinistry.classList.toggle('section-highlighted', state.selectedTier === 'church');
@@ -627,6 +635,28 @@
         message: detailedMessage,
       });
 
+      // Attempt Stripe Recurring Checkout Session creation if STRIPE_SECRET_KEY is configured in Vercel
+      try {
+        const stripeRes = await fetch('/api/create-checkout-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            tier: state.selectedTier,
+            name: fullName,
+            company: companyName,
+            email,
+            applicationId: memberId,
+          }),
+        });
+        if (stripeRes.ok) {
+          const stripeData = await stripeRes.json();
+          if (stripeData && stripeData.stripeConfigured && stripeData.checkoutUrl) {
+            window.location.href = stripeData.checkoutUrl;
+            return;
+          }
+        }
+      } catch (_) {}
+
       if (appSubmitBtn) {
         appSubmitBtn.disabled = false;
         appSubmitBtn.textContent = 'Submit Affiliation Application & Covenant';
@@ -802,4 +832,30 @@
       }
     });
   }
+
+  // Handle return from Stripe Checkout (?checkout=success or ?checkout=canceled)
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const checkoutStatus = params.get('checkout');
+    const returnedTier = params.get('tier');
+    const returnedAppId = params.get('app_id');
+    if (checkoutStatus === 'success') {
+      unlockSite();
+      if (returnedTier && TIER_CATALOG[returnedTier]) {
+        state.selectedTier = returnedTier;
+        const tierInfo = TIER_CATALOG[returnedTier];
+        const portalTierBadge = document.getElementById('portalTierBadge');
+        if (portalTierBadge) portalTierBadge.textContent = tierInfo.shortBadge;
+      }
+      setView('portal');
+      showToast(
+        `Stripe payment confirmed${returnedAppId ? ` (${returnedAppId})` : ''}! Welcome to The Azusa Network.`
+      );
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (checkoutStatus === 'canceled') {
+      unlockSite();
+      showToast('Checkout canceled. Your application was received and you can complete payment anytime.');
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  } catch (_) {}
 })();
