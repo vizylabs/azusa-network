@@ -94,6 +94,11 @@
 
       <footer class="coming-soon-footer">
         <span>&copy; 2026 The Azusa Network · azusanetwork.com</span>
+        <div class="footer-legal-links">
+          <a href="./legal.html#privacy">Privacy Policy</a>
+          <a href="./legal.html#terms">Terms of Service</a>
+          <a href="./legal.html#cookies">Cookie Policy</a>
+        </div>
       </footer>
     </div>
   </section>
@@ -210,9 +215,9 @@
               <a href="#subscriptions" class="btn btn-gold btn-lg">
                 View Membership Plans
               </a>
-              <button type="button" class="btn btn-ghost-light btn-lg" data-open-modal="application" data-tier="minister">
+              <a href="./apply.html?tier=minister" class="btn btn-ghost-light btn-lg" data-open-modal="application" data-tier="minister">
                 Apply for Credentials
-              </button>
+              </a>
             </div>
 
             <div class="hero-highlights">
@@ -442,9 +447,9 @@
               </ul>
 
               <div class="plan-action">
-                <button type="button" class="btn btn-outline-navy btn-block" data-select-plan="associate">
+                <a href="./apply.html?tier=associate" class="btn btn-outline-navy btn-block" data-select-plan="associate">
                   Apply as Associate Minister
-                </button>
+                </a>
               </div>
             </article>
 
@@ -480,9 +485,9 @@
               </ul>
 
               <div class="plan-action">
-                <button type="button" class="btn btn-gold btn-block" data-select-plan="minister">
+                <a href="./apply.html?tier=minister" class="btn btn-gold btn-block" data-select-plan="minister">
                   Apply as Credentialed Minister
-                </button>
+                </a>
               </div>
             </article>
 
@@ -517,9 +522,9 @@
               </ul>
 
               <div class="plan-action">
-                <button type="button" class="btn btn-navy btn-block" data-select-plan="church">
+                <a href="./apply.html?tier=church" class="btn btn-navy btn-block" data-select-plan="church">
                   Apply as Church &amp; Ministry
-                </button>
+                </a>
               </div>
             </article>
 
@@ -538,9 +543,9 @@
                 <span class="partner-seed-label">Ready to Begin Your Application?</span>
                 <strong class="partner-seed-value" style="display:block;font-size:1.15rem;margin-top:0.25rem;">Recognizing the Call. Equipping the Saints. Strengthening the Church.</strong>
               </div>
-              <button type="button" class="btn btn-gold" data-open-modal="application" data-tier="minister">
-                Open Full Affiliation Application &amp; Covenant
-              </button>
+              <a href="./apply.html?tier=minister" class="btn btn-gold" data-open-modal="application" data-tier="minister">
+                Open 5-Step Affiliation Application &rarr;
+              </a>
             </div>
           </div>
 
@@ -641,9 +646,9 @@
                 <p>Formal ordination and congregation affiliation service with laying on of hands and prophetic presbytery.</p>
               </div>
               <div class="event-cta">
-                <button type="button" class="btn btn-outline-navy" data-open-modal="application" data-tier="minister">
+                <a href="./apply.html?tier=minister" class="btn btn-outline-navy" data-open-modal="application" data-tier="minister">
                   Apply for Cohort
-                </button>
+                </a>
               </div>
             </article>
           </div>
@@ -745,9 +750,9 @@
               </p>
             </div>
             <div class="portal-banner-actions">
-              <button type="button" class="btn btn-gold" id="changePlanPortalBtn">
+              <a href="./apply.html?tier=minister" class="btn btn-gold" id="changePlanPortalBtn">
                 Change Membership Plan
-              </button>
+              </a>
               <button type="button" class="btn btn-ghost-light" data-switch-public>
                 Back to Website
               </button>
@@ -957,9 +962,9 @@
                   <p id="billingPlanRate">$59.00 / month · Active Standing</p>
                 </div>
                 <div class="portal-btn-row">
-                  <button type="button" class="btn btn-gold" data-open-modal="application" data-tier="church">
+                  <a href="./apply.html?tier=church" class="btn btn-gold" data-open-modal="application" data-tier="church">
                     Update or Upgrade Plan
-                  </button>
+                  </a>
                   <button type="button" class="btn btn-outline-navy" data-toast="Annual tax-deductible contribution receipt downloaded.">
                     Download Giving Statement
                   </button>
@@ -1013,8 +1018,18 @@
           <a href="#values">Our Core Values</a>
           <a href="#leadership">Dr. Scott &amp; Michelle Reece</a>
           <a href="#subscriptions">Membership Plans</a>
+          <a href="./apply.html">Affiliation Application</a>
           <a href="#credentialing">Ministerial Ordination</a>
           <a href="#gatherings">Upcoming Gatherings</a>
+        </div>
+
+        <div class="footer-nav">
+          <h4>Legal &amp; Governance</h4>
+          <a href="./legal.html#privacy">Privacy Policy</a>
+          <a href="./legal.html#terms">Terms of Service</a>
+          <a href="./legal.html#cookies">Cookie Policy</a>
+          <a href="./legal.html#billing">Billing &amp; Refund Policy</a>
+          <a href="./legal.html#ecclesiastical">Local Church Autonomy</a>
         </div>
 
         <div class="footer-contact">
@@ -1038,541 +1053,33 @@
 
       <div class="container footer-bottom">
         <span>&copy; 2026 The Azusa Network of Churches &amp; Ministries. All Rights Reserved.</span>
-        <button type="button" class="footer-lock-link" data-lock-site>Return to Coming Soon Landing Page</button>
+        <div class="footer-legal-links">
+          <a href="./legal.html#privacy">Privacy</a>
+          <a href="./legal.html#terms">Terms</a>
+          <a href="./legal.html#cookies">Cookies</a>
+          <a href="./legal.html#billing">Billing Policy</a>
+          <button type="button" class="footer-lock-link" data-lock-site>Return to Coming Soon Landing Page</button>
+        </div>
       </div>
     </footer>
 
   </div><!-- /#siteWrapper -->
 
-  <!-- ===================================================================== -->
-  <!-- OFFICIAL NETWORK AFFILIATION APPLICATION & COVENANT MODAL             -->
-  <!-- ===================================================================== -->
-  <div class="modal-backdrop" id="subscriptionModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-dialog modal-dialog-wide">
-      <div class="modal-header">
-        <div>
-          <span class="app-doc-org">Azusa Network of Churches and Ministries</span>
-          <h2 class="modal-title" id="modalTitle">Network Affiliation Application &amp; Covenant</h2>
-          <p class="modal-subtitle">One Network. Shared Vision. Distinct Levels of Relationship.</p>
-        </div>
-        <button type="button" class="modal-close" id="closeModalBtn" aria-label="Close">&times;</button>
+  <!-- Cookie & Privacy Consent Banner -->
+  <aside id="cookieConsentBanner" class="cookie-banner hidden" aria-label="Cookie and Privacy Consent">
+    <div class="cookie-banner-inner">
+      <div class="cookie-banner-text">
+        <strong>Privacy &amp; Cookie Notice</strong>
+        <p>
+          We use essential cookies and local browser storage to save your application progress and secure payments via Stripe. Read our <a href="./legal.html#privacy">Privacy Policy</a>, <a href="./legal.html#terms">Terms of Service</a>, and <a href="./legal.html#cookies">Cookie Policy</a>.
+        </p>
       </div>
-
-      <form id="subscriptionCheckoutForm" class="modal-body app-covenant-form" novalidate>
-
-        <!-- =============================================================== -->
-        <!-- SECTION 1 — SELECT YOUR AFFILIATION LEVEL                       -->
-        <!-- =============================================================== -->
-        <fieldset class="app-section">
-          <legend class="app-section-title">Section 1 — Select Your Affiliation Level</legend>
-          <p class="app-section-intro">Please select one affiliation level:</p>
-
-          <div class="affiliation-level-list">
-            <!-- Option 1: Associate Minister -->
-            <label class="affiliation-level-card">
-              <input type="radio" name="selectedTier" value="associate" />
-              <div class="affiliation-level-body">
-                <div class="affiliation-level-head">
-                  <strong>Associate Minister</strong>
-                  <span class="affiliation-level-price" data-modal-price="associate">$29.00 per month</span>
-                </div>
-                <p>
-                  For individuals who desire to connect with an apostolic network for Christian fellowship, spiritual encouragement, leadership development, ministry relationships, and participation in ANCM’s mission.
-                </p>
-                <p class="affiliation-level-note">
-                  Associate Minister affiliation provides a recognized relationship with the Network but does not confer ministerial commissioning, licensing, or ordination.
-                </p>
-              </div>
-            </label>
-
-            <!-- Option 2: Credentialed Minister -->
-            <label class="affiliation-level-card">
-              <input type="radio" name="selectedTier" value="minister" checked />
-              <div class="affiliation-level-body">
-                <div class="affiliation-level-head">
-                  <strong>Credentialed Minister</strong>
-                  <span class="affiliation-level-price" data-modal-price="minister">$59.00 per month</span>
-                </div>
-                <p>
-                  For ministers who hold or are seeking ANCM ministerial commissioning, licensing, or ordination. This affiliation level provides participation in ANCM’s ministerial fellowship, opportunities for leadership development, and access to the Network’s ecclesiastical credentialing and accountability processes.
-                </p>
-                <p class="affiliation-level-note">
-                  Ministerial credentials are granted only after the applicant satisfies ANCM’s established qualifications, examination requirements, and approval procedures. Payment of monthly affiliation fees does not guarantee commissioning, licensing, or ordination.
-                </p>
-              </div>
-            </label>
-
-            <!-- Option 3: Affiliated Church & Ministry -->
-            <label class="affiliation-level-card">
-              <input type="radio" name="selectedTier" value="church" />
-              <div class="affiliation-level-body">
-                <div class="affiliation-level-head">
-                  <strong>Affiliated Church &amp; Ministry</strong>
-                  <span class="affiliation-level-price" data-modal-price="church">$149.00 per month</span>
-                </div>
-                <p>
-                  For local churches, independent ministries, missions organizations, and other Christian ministry organizations seeking formal apostolic relationship and participation in ANCM.
-                </p>
-                <p class="affiliation-level-note">
-                  Affiliated churches and ministries retain full autonomy concerning their property, finances, leadership selection, employment decisions, and internal governance. Affiliation does not transfer ownership or governing authority to ANCM.
-                </p>
-              </div>
-            </label>
-          </div>
-        </fieldset>
-
-        <!-- =============================================================== -->
-        <!-- SECTION 2 — APPLICANT INFORMATION                               -->
-        <!-- =============================================================== -->
-        <fieldset class="app-section">
-          <legend class="app-section-title">Section 2 — Applicant Information</legend>
-
-          <div class="form-grid-two">
-            <div class="field">
-              <label for="subFullName">Full Legal Name *</label>
-              <input type="text" id="subFullName" required placeholder="Full Legal Name" />
-            </div>
-            <div class="field">
-              <label for="subPreferredName">Preferred Name</label>
-              <input type="text" id="subPreferredName" placeholder="Preferred Name" />
-            </div>
-          </div>
-
-          <div class="form-grid-two">
-            <div class="field">
-              <label for="subEmail">Email Address *</label>
-              <input type="email" id="subEmail" required placeholder="you@ministry.org" />
-            </div>
-            <div class="field">
-              <label for="subPhone">Telephone Number *</label>
-              <input type="tel" id="subPhone" required placeholder="(555) 000-0000" />
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="subAddress">Mailing Address *</label>
-            <input type="text" id="subAddress" required placeholder="Street Address" />
-          </div>
-
-          <div class="form-grid-three">
-            <div class="field">
-              <label for="subCity">City *</label>
-              <input type="text" id="subCity" required placeholder="City" />
-            </div>
-            <div class="field">
-              <label for="subState">State *</label>
-              <input type="text" id="subState" required placeholder="State" />
-            </div>
-            <div class="field">
-              <label for="subZip">ZIP *</label>
-              <input type="text" id="subZip" required placeholder="ZIP Code" />
-            </div>
-          </div>
-
-          <div class="form-grid-three">
-            <div class="field">
-              <label for="subOrg">Church or Ministry Name</label>
-              <input type="text" id="subOrg" placeholder="Church or Ministry Name" />
-            </div>
-            <div class="field">
-              <label for="subPosition">Current Ministry Position</label>
-              <input type="text" id="subPosition" placeholder="e.g., Senior Pastor, Evangelist" />
-            </div>
-            <div class="field">
-              <label for="subWebsite">Website or Social Media</label>
-              <input type="text" id="subWebsite" placeholder="example.org or @handle" />
-            </div>
-          </div>
-        </fieldset>
-
-        <!-- =============================================================== -->
-        <!-- SECTION 3 — CHURCH OR MINISTRY INFORMATION                      -->
-        <!-- =============================================================== -->
-        <fieldset class="app-section" id="sectionChurchMinistry">
-          <legend class="app-section-title">Section 3 — Church or Ministry Information</legend>
-          <p class="app-section-badge" id="section3StatusNote">Complete this section when applying for Affiliated Church &amp; Ministry status.</p>
-
-          <div class="form-grid-two">
-            <div class="field">
-              <label for="orgLegalName">Legal Organization Name</label>
-              <input type="text" id="orgLegalName" placeholder="Legal Organization Name" />
-            </div>
-            <div class="field">
-              <label for="orgPublicName">Public Ministry Name (if different)</label>
-              <input type="text" id="orgPublicName" placeholder="Public Ministry Name" />
-            </div>
-          </div>
-
-          <div class="form-grid-two">
-            <div class="field">
-              <label for="orgYearEst">Year Established</label>
-              <input type="text" id="orgYearEst" placeholder="YYYY" />
-            </div>
-            <div class="field">
-              <label for="orgPrimaryLeader">Primary Leader</label>
-              <input type="text" id="orgPrimaryLeader" placeholder="Name &amp; Title of Primary Leader" />
-            </div>
-          </div>
-
-          <div class="form-grid-two">
-            <div class="field">
-              <label for="orgAddress">Organization Address</label>
-              <input type="text" id="orgAddress" placeholder="Full Organization Address" />
-            </div>
-            <div class="field">
-              <label for="orgWebsite">Website</label>
-              <input type="text" id="orgWebsite" placeholder="organization.org" />
-            </div>
-          </div>
-
-          <div class="form-grid-two">
-            <div class="field">
-              <label for="orgType">Organization Type</label>
-              <select id="orgType">
-                <option value="">— Select Organization Type —</option>
-                <option value="Local Church">Local Church</option>
-                <option value="Independent Ministry">Independent Ministry</option>
-                <option value="Missions Organization">Missions Organization</option>
-                <option value="Marketplace Ministry">Marketplace Ministry</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="orgTypeOther">If Other, Please Specify (or Approximate Size)</label>
-              <input type="text" id="orgSizeOrOther" placeholder="Congregation / Ministry Size or Other Type" />
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="orgMissionDesc">Briefly describe the mission and activities of your church or ministry</label>
-            <textarea id="orgMissionDesc" rows="2" placeholder="Describe the mission and activities of your church or ministry..."></textarea>
-          </div>
-
-          <div class="form-grid-three">
-            <div class="field">
-              <label for="orgBoardApproval">Has the organization’s authorized leadership approved this application?</label>
-              <select id="orgBoardApproval">
-                <option value="">— Select —</option>
-                <option value="Yes">Yes</option>
-                <option value="Approval pending">Approval pending</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="orgAuthRep">Authorized Representative</label>
-              <input type="text" id="orgAuthRep" placeholder="Authorized Representative Name" />
-            </div>
-            <div class="field">
-              <label for="orgAuthTitle">Title</label>
-              <input type="text" id="orgAuthTitle" placeholder="Title" />
-            </div>
-          </div>
-        </fieldset>
-
-        <!-- =============================================================== -->
-        <!-- SECTION 4 — SPIRITUAL BACKGROUND AND MINISTRY RELATIONSHIP      -->
-        <!-- =============================================================== -->
-        <fieldset class="app-section">
-          <legend class="app-section-title">Section 4 — Spiritual Background and Ministry Relationship</legend>
-
-          <div class="field">
-            <label for="bgRelationshipChrist">1. Briefly describe your personal relationship with Jesus Christ and your involvement in Christian ministry. *</label>
-            <textarea id="bgRelationshipChrist" rows="2" required placeholder="Share your testimony and ministry involvement..."></textarea>
-          </div>
-
-          <div class="field">
-            <label for="bgWhyAncm">2. What has led you or your organization to seek affiliation with the Azusa Network of Churches and Ministries? *</label>
-            <textarea id="bgWhyAncm" rows="2" required placeholder="What led you to seek affiliation with ANCM?"></textarea>
-          </div>
-
-          <div class="field">
-            <label for="bgHopingToReceive">3. What are you hoping to receive through your relationship with ANCM?</label>
-            <textarea id="bgHopingToReceive" rows="2" placeholder="What are you hoping to receive through your relationship with ANCM?"></textarea>
-          </div>
-
-          <div class="field">
-            <label for="bgGiftsAndService">4. What ministry experience, spiritual gifts, or areas of service would you bring to the Network?</label>
-            <textarea id="bgGiftsAndService" rows="2" placeholder="Ministry experience, spiritual gifts, or areas of service..."></textarea>
-          </div>
-
-          <div class="form-grid-two">
-            <div class="field">
-              <label for="bgOtherAffiliation">5. Are you currently affiliated with another denomination, ministerial fellowship, or apostolic network?</label>
-              <select id="bgOtherAffiliation">
-                <option value="No">No</option>
-                <option value="Yes">Yes</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="bgOtherOrgName">If yes, please identify the organization</label>
-              <input type="text" id="bgOtherOrgName" placeholder="Organization Name (if applicable)" />
-            </div>
-          </div>
-          <p class="app-legal-caption">
-            Affiliation with another Christian organization does not automatically disqualify an applicant from participation in ANCM.
-          </p>
-        </fieldset>
-
-        <!-- =============================================================== -->
-        <!-- SECTION 5 — DOCTRINAL ALIGNMENT                                 -->
-        <!-- =============================================================== -->
-        <fieldset class="app-section">
-          <legend class="app-section-title">Section 5 — Doctrinal Alignment</legend>
-          <p class="app-section-intro">
-            ANCM is a Pentecostal, charismatic, apostolic network committed to the authority of Holy Scripture, the Lordship of Jesus Christ, the continuing ministry of the Holy Spirit, and the equipping of the Church for the advancement of God’s Kingdom.
-          </p>
-          <p class="app-subhead">Please affirm the following:</p>
-
-          <div class="affirmation-checklist">
-            <label class="check-label">
-              <input type="checkbox" id="docAffirm1" required checked />
-              <span>I affirm the foundational Christian doctrines contained in the ANCM Statement of Faith.</span>
-            </label>
-            <label class="check-label">
-              <input type="checkbox" id="docAffirm2" required checked />
-              <span>I understand and respect ANCM’s Pentecostal, charismatic, and apostolic identity.</span>
-            </label>
-            <label class="check-label">
-              <input type="checkbox" id="docAffirm3" required checked />
-              <span>I affirm the continuing work and ministry of the Holy Spirit.</span>
-            </label>
-            <label class="check-label">
-              <input type="checkbox" id="docAffirm4" required checked />
-              <span>I respect ANCM’s commitment to biblical leadership, Christian character, and ministerial accountability.</span>
-            </label>
-            <label class="check-label">
-              <input type="checkbox" id="docAffirm5" required checked />
-              <span>I agree to conduct my participation in the Network consistently with its published standards.</span>
-            </label>
-          </div>
-
-          <div class="field" style="margin-top:0.85rem;">
-            <label for="docQuestions">Do you have any doctrinal questions or areas requiring clarification?</label>
-            <textarea id="docQuestions" rows="2" placeholder="Optional: Note any doctrinal questions or areas for clarification..."></textarea>
-          </div>
-
-          <p class="app-legal-caption">
-            ANCM recognizes that faithful Christian ministers and churches may hold differing perspectives concerning secondary theological matters. Such differences shall not automatically prevent affiliation when the applicant remains in substantial agreement with ANCM’s foundational doctrines and mission.
-          </p>
-        </fieldset>
-
-        <!-- =============================================================== -->
-        <!-- SECTION 6 — MINISTERIAL CREDENTIALS                             -->
-        <!-- =============================================================== -->
-        <fieldset class="app-section" id="sectionMinisterialCredentials">
-          <legend class="app-section-title">Section 6 — Ministerial Credentials</legend>
-          <p class="app-section-badge" id="section6StatusNote">Complete this section if applying for Credentialed Minister affiliation.</p>
-
-          <div class="form-grid-two">
-            <div class="field">
-              <label for="credStanding">Current Ministerial Standing</label>
-              <select id="credStanding">
-                <option value="Seeking Initial Ministerial Credentials">Seeking Initial Ministerial Credentials</option>
-                <option value="Commissioned Minister">Commissioned Minister</option>
-                <option value="Licensed Minister">Licensed Minister</option>
-                <option value="Ordained Minister">Ordained Minister</option>
-                <option value="Seeking Recognition or Transfer of Existing Credentials">Seeking Recognition or Transfer of Existing Credentials</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="credIssuingOrg">Issuing Organization (if applicable)</label>
-              <input type="text" id="credIssuingOrg" placeholder="Issuing Organization" />
-            </div>
-          </div>
-
-          <div class="form-grid-three">
-            <div class="field">
-              <label for="credYearIssued">Year Credentials Were Issued</label>
-              <input type="text" id="credYearIssued" placeholder="YYYY" />
-            </div>
-            <div class="field">
-              <label for="credCurrentStatus">Current Credential Status</label>
-              <input type="text" id="credCurrentStatus" placeholder="e.g., Active / In Good Standing" />
-            </div>
-            <div class="field">
-              <label for="credYearsMinistry">Years of Active Ministry</label>
-              <input type="text" id="credYearsMinistry" placeholder="Years" />
-            </div>
-          </div>
-
-          <div class="app-policy-notes">
-            <p>• Applicants seeking ANCM credentials must complete the official Ministerial Credentialing Application and applicable examination, reference, and interview requirements.</p>
-            <p>• ANCM values theological education but does not require a formal academic degree as an absolute prerequisite for licensing or ordination.</p>
-            <p>• Biblical competency, Christian character, demonstrated calling, and faithful ministerial service shall be central considerations in credentialing decisions.</p>
-          </div>
-        </fieldset>
-
-        <!-- =============================================================== -->
-        <!-- SECTION 7 — NETWORK AFFILIATION COVENANT                        -->
-        <!-- =============================================================== -->
-        <fieldset class="app-section">
-          <legend class="app-section-title">Section 7 — Network Affiliation Covenant</legend>
-          <p class="app-section-intro">
-            By applying for affiliation with the Azusa Network of Churches and Ministries, I voluntarily affirm the following commitments:
-          </p>
-
-          <div class="covenant-scroll-box">
-            <div class="covenant-clause">
-              <h4>A. Shared Faith and Mission</h4>
-              <p>I recognize Jesus Christ as Lord and affirm the foundational Christian faith and mission of ANCM. I desire to participate in a network committed to strengthening ministers, equipping believers, encouraging churches, and advancing the Kingdom of God.</p>
-            </div>
-            <div class="covenant-clause">
-              <h4>B. Apostolic Relationship</h4>
-              <p>I understand that ANCM is an apostolic fellowship established to provide spiritual relationships, encouragement, ministry development, and appropriate ecclesiastical accountability. I enter this relationship voluntarily and with a commitment to mutual respect and Christian integrity.</p>
-            </div>
-            <div class="covenant-clause">
-              <h4>C. Biblical Character and Conduct</h4>
-              <p>I agree to represent my affiliation truthfully and to conduct myself consistently with biblical principles and ANCM’s applicable ethical and safeguarding standards.</p>
-            </div>
-            <div class="covenant-clause">
-              <h4>D. Local Church and Ministry Autonomy</h4>
-              <p>I understand that affiliation with ANCM does not surrender or transfer ownership of property, control of finances, authority over employees, selection of pastoral leadership, or internal governance of an affiliated church or ministry. Any additional oversight relationship must be established through a separate voluntary written agreement.</p>
-            </div>
-            <div class="covenant-clause">
-              <h4>E. Ministerial Credentialing</h4>
-              <p>I understand that affiliation with ANCM and the issuance of ministerial credentials are separate matters. Associate Minister affiliation does not constitute ministerial commissioning, licensing, or ordination. Credentialed Minister affiliation is subject to ANCM’s formal credentialing standards and approval procedures.</p>
-            </div>
-            <div class="covenant-clause">
-              <h4>F. Corporate Governance</h4>
-              <p>I acknowledge that network affiliation does not constitute statutory membership in the ANCM nonprofit corporation. Affiliates do not acquire corporate voting rights, ownership interests, or authority to elect corporate directors solely by virtue of their affiliation.</p>
-            </div>
-            <div class="covenant-clause">
-              <h4>G. Accountability</h4>
-              <p>I understand that affiliation is subject to ANCM’s governing documents and applicable policies. ANCM may review, suspend, or terminate affiliation for material violations of its established standards, subject to applicable procedures.</p>
-            </div>
-          </div>
-        </fieldset>
-
-        <!-- =============================================================== -->
-        <!-- SECTION 8 — MONTHLY AFFILIATION AND PAYMENT AGREEMENT           -->
-        <!-- =============================================================== -->
-        <fieldset class="app-section">
-          <legend class="app-section-title">Section 8 — Monthly Affiliation and Payment Agreement</legend>
-
-          <div class="covenant-scroll-box">
-            <div class="covenant-clause">
-              <h4>Monthly Affiliation Fees</h4>
-              <p>I understand that the affiliation level I have selected carries the following monthly fee: <strong>Associate Minister: $29.00 per month</strong> · <strong>Credentialed Minister: $59.00 per month</strong> · <strong>Affiliated Church &amp; Ministry: $149.00 per month</strong>.</p>
-            </div>
-            <div class="covenant-clause">
-              <h4>Recurring Billing Authorization</h4>
-              <p>By separately accepting the recurring payment authorization at checkout, I authorize ANCM or its designated payment processor to charge my selected payment method for the applicable monthly affiliation fee. The first charge will occur on the date disclosed at checkout. Subsequent charges will occur approximately monthly on the disclosed renewal date, subject to the payment processor’s calendar and billing procedures. The amount, frequency, payment method, and applicable taxes or additional charges, if any, shall be clearly disclosed before payment authorization.</p>
-            </div>
-            <div class="covenant-clause">
-              <h4>Automatic Monthly Renewal &amp; Cancellation</h4>
-              <p>My paid affiliation will automatically renew each month unless canceled in accordance with ANCM’s published cancellation procedures. I may cancel my monthly affiliation at any time through the designated online cancellation process or by contacting ANCM through its published cancellation channel. Cancellation will ordinarily become effective at the end of the current paid billing period. No additional recurring affiliation charges will be made after cancellation becomes effective, except for previously authorized or outstanding amounts lawfully owed.</p>
-            </div>
-            <div class="covenant-clause">
-              <h4>Refunds, Changes to Fees &amp; Approval of Affiliation</h4>
-              <p>Monthly affiliation payments are ordinarily nonrefundable after the applicable billing period begins, except where required by law or expressly provided in ANCM’s published refund policy. ANCM may modify its affiliation fees upon advance notice as required by applicable law and its published billing terms. Submission of an application or payment does not guarantee acceptance into ANCM. ANCM shall disclose how payments are handled if an application is declined or withdrawn before approval. Applicants shall not be enrolled in ongoing paid billing without the required authorization and applicable disclosures.</p>
-            </div>
-            <div class="covenant-clause">
-              <h4>Ministerial Credential Renewal</h4>
-              <p>I understand that annual ministerial credential renewal is separate from monthly network affiliation billing. Payment of monthly affiliation fees does not automatically renew ministerial credentials or eliminate ANCM’s doctrinal, ethical, or accountability requirements.</p>
-            </div>
-          </div>
-
-          <div class="stripe-billing-summary-card">
-            <div class="stripe-summary-top">
-              <div>
-                <span class="stripe-badge">Secure Credit Card &amp; ACH Billing</span>
-                <h4 id="sec8SelectedPlanName">Credentialed Minister Affiliation</h4>
-                <p>Automatic monthly renewal · Cancel anytime in your Member Portal</p>
-              </div>
-              <div class="stripe-summary-price">
-                <strong id="sec8SelectedPlanPrice">$59.00</strong>
-                <span>per month</span>
-              </div>
-            </div>
-            <div class="stripe-cards-row">
-              <span>Accepted via Stripe Checkout:</span>
-              <div class="card-brand-pills">
-                <span>Visa</span>
-                <span>Mastercard</span>
-                <span>Amex</span>
-                <span>Discover</span>
-                <span>US Bank (ACH)</span>
-              </div>
-            </div>
-          </div>
-
-          <label class="check-label" style="margin-top:0.85rem;">
-            <input type="checkbox" id="billingAuthAgree" required checked />
-            <span><strong>Recurring Billing Authorization:</strong> I accept the Monthly Affiliation and Payment Agreement and authorize recurring monthly billing for my selected affiliation level upon approval.</span>
-          </label>
-        </fieldset>
-
-        <!-- =============================================================== -->
-        <!-- SECTION 9 — APPLICANT AFFIRMATION & SIGNATURE                   -->
-        <!-- =============================================================== -->
-        <fieldset class="app-section">
-          <legend class="app-section-title">Section 9 — Applicant Affirmation</legend>
-          <p class="app-subhead">By signing or electronically submitting this application, I affirm that:</p>
-
-          <ul class="affirmation-bullet-list">
-            <li>The information provided is accurate and complete to the best of my knowledge.</li>
-            <li>I have reviewed the ANCM Statement of Faith and the applicable affiliation commitments.</li>
-            <li>I understand the privileges and limitations of my selected affiliation level.</li>
-            <li>I understand that affiliation does not automatically confer ministerial credentials.</li>
-            <li>I understand that monthly affiliation fees are separate from ecclesiastical credentialing approval.</li>
-            <li>I voluntarily request affiliation with the Azusa Network of Churches and Ministries.</li>
-          </ul>
-
-          <label class="check-label" style="margin-bottom:1rem;">
-            <input type="checkbox" id="covenantAgree" required checked />
-            <span>I affirm all statements above and voluntarily submit this Network Affiliation Application &amp; Covenant. *</span>
-          </label>
-
-          <div class="form-grid-two">
-            <div class="field">
-              <label for="sigRepName">Applicant or Authorized Representative *</label>
-              <input type="text" id="sigRepName" required placeholder="Full Name" />
-            </div>
-            <div class="field">
-              <label for="sigTitle">Title (if applicable)</label>
-              <input type="text" id="sigTitle" placeholder="Title" />
-            </div>
-          </div>
-
-          <div class="form-grid-three">
-            <div class="field">
-              <label for="sigElectronic">Electronic Signature (Type Full Legal Name) *</label>
-              <input type="text" id="sigElectronic" required placeholder="/s/ Your Full Legal Name" />
-            </div>
-            <div class="field">
-              <label for="sigDate">Date *</label>
-              <input type="date" id="sigDate" required />
-            </div>
-            <div class="field">
-              <label for="sigSelectedLevel">Selected Affiliation Level</label>
-              <input type="text" id="sigSelectedLevel" value="Credentialed Minister — $59.00/mo" readonly />
-            </div>
-          </div>
-        </fieldset>
-
-        <!-- =============================================================== -->
-        <!-- AFFILIATION DECLARATION                                         -->
-        <!-- =============================================================== -->
-        <div class="affiliation-declaration-box">
-          <h4>Affiliation Declaration</h4>
-          <p>
-            The Azusa Network of Churches and Ministries exists to recognize the call of God, cultivate meaningful apostolic relationships, strengthen Christian leaders, equip the saints, and advance the Kingdom of God. We believe the Church is strengthened through relationships grounded in biblical truth, spiritual integrity, mutual encouragement, and accountable leadership. Our purpose is not to control local churches or create unnecessary institutional barriers, but to cultivate a network of ministers, churches, and ministries united in faith, mission, and a shared commitment to the work of the Holy Spirit.
-          </p>
-          <strong>One Network. Shared Vision. Kingdom Purpose.</strong>
-          <span>Recognizing the Call. Equipping the Saints. Strengthening the Church. Advancing the Kingdom.</span>
-        </div>
-
-        <div class="modal-footer">
-          <div class="modal-total">
-            <span>Selected Affiliation Fee</span>
-            <strong id="modalTotalAmount">$59.00 / month</strong>
-          </div>
-          <button type="submit" class="btn btn-gold btn-lg" id="appSubmitBtn">
-            Submit Affiliation Application &amp; Covenant
-          </button>
-        </div>
-      </form>
+      <div class="cookie-banner-actions">
+        <button type="button" class="btn btn-ghost-light btn-sm" id="cookieEssentialBtn">Essential Only</button>
+        <button type="button" class="btn btn-gold btn-sm" id="cookieAcceptBtn">Accept All</button>
+      </div>
     </div>
-  </div>
+  </aside>
 
   <!-- Toast Banner -->
   <div id="toastNotification" class="toast-banner" role="status" aria-live="polite"></div>

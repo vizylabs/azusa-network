@@ -273,12 +273,19 @@
   const suggestedSeedOutput = document.getElementById('suggestedSeedOutput');
   const applyCustomSeedBtn = document.getElementById('applyCustomSeedBtn');
 
-  // Modal References
-  const subscriptionModal = document.getElementById('subscriptionModal');
-  const closeModalBtn = document.getElementById('closeModalBtn');
+  // Multi-Step Inline Application Wizard & Payment References
+  const applicationFlowSection = document.getElementById('applicationFlowSection');
   const subscriptionCheckoutForm = document.getElementById('subscriptionCheckoutForm');
   const modalTierInputs = document.querySelectorAll('input[name="selectedTier"]');
   const modalTotalAmount = document.getElementById('modalTotalAmount');
+  const wizardHeaderPlanBadge = document.getElementById('wizardHeaderPlanBadge');
+  const wizardStepTabs = document.querySelectorAll('[data-wizard-step]');
+  const wizardPanes = document.querySelectorAll('[data-step-pane]');
+  const wizardProgressFill = document.getElementById('wizardProgressFill');
+  const wizardMobileStepText = document.getElementById('wizardMobileStepText');
+  const wizardPrevBtn = document.getElementById('wizardPrevBtn');
+  const wizardNextBtn = document.getElementById('wizardNextBtn');
+  const appSubmitBtn = document.getElementById('appSubmitBtn');
   const payTabs = document.querySelectorAll('[data-pay-method]');
   const cardPaymentFields = document.getElementById('cardPaymentFields');
   const achPaymentFields = document.getElementById('achPaymentFields');
@@ -411,13 +418,27 @@
     });
   }
 
-  // Subscription Modal Opening & Closing
+  // Multi-Step Inline Application Wizard Logic
   const sigSelectedLevelInput = document.getElementById('sigSelectedLevel');
   const sigDateInput = document.getElementById('sigDate');
   const sectionChurchMinistry = document.getElementById('sectionChurchMinistry');
   const sectionMinisterialCredentials = document.getElementById('sectionMinisterialCredentials');
   const sec8SelectedPlanName = document.getElementById('sec8SelectedPlanName');
   const sec8SelectedPlanPrice = document.getElementById('sec8SelectedPlanPrice');
+  const ccNumberInput = document.getElementById('ccNumber');
+  const ccExpiryInput = document.getElementById('ccExpiry');
+  const ccBrandBadge = document.getElementById('ccBrandBadge');
+
+  const STEP_NAMES = {
+    1: 'Select Affiliation Level',
+    2: 'Applicant Profile',
+    3: 'Ministry & Calling',
+    4: 'Doctrine & Covenant',
+    5: 'Payment & Submit',
+  };
+
+  let currentWizardStep = 1;
+  let activePayMethod = 'card';
 
   if (sigDateInput && !sigDateInput.value) {
     sigDateInput.value = new Date().toISOString().split('T')[0];
@@ -428,6 +449,9 @@
     const feeText = `$${tierObj.monthly}.00 / month`;
     if (modalTotalAmount) {
       modalTotalAmount.textContent = feeText;
+    }
+    if (wizardHeaderPlanBadge) {
+      wizardHeaderPlanBadge.textContent = `${tierObj.name} · $${tierObj.monthly}.00/mo`;
     }
     if (sigSelectedLevelInput) {
       sigSelectedLevelInput.value = `${tierObj.name} — $${tierObj.monthly}.00/mo`;
@@ -446,50 +470,310 @@
     }
   }
 
-  function openSubscriptionModal(tierKey, keepCustom = false) {
+  function validateWizardStep(stepNum) {
+    const val = (id) => {
+      const el = document.getElementById(id);
+      return el ? el.value.trim() : '';
+    };
+    const checked = (id) => {
+      const el = document.getElementById(id);
+      return el ? Boolean(el.checked) : false;
+    };
+
+    if (stepNum === 2) {
+      if (!val('subFullName') || !val('subEmail') || !val('subPhone')) {
+        showToast('Please enter your Full Legal Name, Email Address, and Telephone Number to continue.');
+        const firstEmpty = ['subFullName', 'subEmail', 'subPhone']
+          .map((id) => document.getElementById(id))
+          .find((el) => el && !el.value.trim());
+        if (firstEmpty) firstEmpty.focus();
+        return false;
+      }
+      // Auto-populate signature & cardholder fields if blank
+      const fullName = val('subFullName');
+      const position = val('subPosition');
+      const sigRepEl = document.getElementById('sigRepName');
+      const sigTitleEl = document.getElementById('sigTitle');
+      const ccNameEl = document.getElementById('ccName');
+      const ccZipEl = document.getElementById('ccZip');
+      if (sigRepEl && !sigRepEl.value.trim()) sigRepEl.value = fullName;
+      if (sigTitleEl && !sigTitleEl.value.trim() && position) sigTitleEl.value = position;
+      if (ccNameEl && !ccNameEl.value.trim()) ccNameEl.value = fullName;
+      if (ccZipEl && !ccZipEl.value.trim() && val('subZip')) ccZipEl.value = val('subZip');
+    }
+
+    if (stepNum === 3) {
+      if (!val('bgRelationshipChrist') || !val('bgWhyAncm')) {
+        showToast('Please share your brief testimony and what led you to seek affiliation with ANCM.');
+        const firstEmpty = ['bgRelationshipChrist', 'bgWhyAncm']
+          .map((id) => document.getElementById(id))
+          .find((el) => el && !el.value.trim());
+        if (firstEmpty) firstEmpty.focus();
+        return false;
+      }
+    }
+
+    if (stepNum === 4) {
+      const allDoctrinesAffirmed =
+        checked('docAffirm1') &&
+        checked('docAffirm2') &&
+        checked('docAffirm3') &&
+        checked('docAffirm4') &&
+        checked('docAffirm5');
+      if (!allDoctrinesAffirmed) {
+        showToast('Please affirm all 5 foundational doctrinal statements in Step 4 to continue.');
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  function setWizardStep(targetStep, shouldScroll = true) {
+    const step = Math.max(1, Math.min(5, Number(targetStep) || 1));
+
+    // Validate intermediate steps when advancing forward
+    if (step > currentWizardStep) {
+      for (let s = currentWizardStep; s < step; s++) {
+        if (!validateWizardStep(s)) return;
+      }
+    }
+
+    currentWizardStep = step;
+
+    wizardPanes.forEach((pane) => {
+      const paneStep = Number(pane.getAttribute('data-step-pane'));
+      pane.classList.toggle('active', paneStep === currentWizardStep);
+    });
+
+    wizardStepTabs.forEach((tab) => {
+      const tabStep = Number(tab.getAttribute('data-wizard-step'));
+      tab.classList.toggle('active', tabStep === currentWizardStep);
+      tab.classList.toggle('completed', tabStep < currentWizardStep);
+      tab.setAttribute('aria-selected', tabStep === currentWizardStep ? 'true' : 'false');
+    });
+
+    if (wizardProgressFill) {
+      wizardProgressFill.style.width = `${currentWizardStep * 20}%`;
+    }
+
+    if (wizardMobileStepText) {
+      wizardMobileStepText.textContent = `Step ${currentWizardStep} of 5 — ${STEP_NAMES[currentWizardStep]}`;
+    }
+
+    if (wizardPrevBtn) {
+      wizardPrevBtn.style.display = currentWizardStep > 1 ? 'inline-flex' : 'none';
+    }
+
+    if (wizardNextBtn) {
+      if (currentWizardStep < 5) {
+        wizardNextBtn.style.display = 'inline-flex';
+        wizardNextBtn.innerHTML = `Continue to Step ${currentWizardStep + 1}: ${STEP_NAMES[currentWizardStep + 1]} &rarr;`;
+      } else {
+        wizardNextBtn.style.display = 'none';
+      }
+    }
+
+    if (appSubmitBtn) {
+      appSubmitBtn.style.display = currentWizardStep === 5 ? 'inline-flex' : 'none';
+    }
+
+    if (shouldScroll && applicationFlowSection) {
+      const rect = applicationFlowSection.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const offsetTop = rect.top + scrollTop - 92;
+      window.scrollTo({ top: Math.max(0, offsetTop), behavior: 'smooth' });
+    }
+  }
+
+  function openSubscriptionModal(tierKey, keepCustom = false, jumpToStep = 2) {
     if (!keepCustom) state.customAmount = null;
     state.selectedTier = tierKey || 'minister';
+
+    // If not currently on the dedicated application page, navigate to /apply.html
+    if (!subscriptionCheckoutForm) {
+      window.location.href = `./apply.html?tier=${encodeURIComponent(state.selectedTier)}`;
+      return;
+    }
 
     modalTierInputs.forEach((input) => {
       input.checked = input.value === state.selectedTier;
     });
 
     updateModalTotalDisplay();
-    subscriptionModal.classList.add('open');
-    subscriptionModal.setAttribute('aria-hidden', 'false');
+    setWizardStep(jumpToStep, true);
   }
 
   function closeSubscriptionModal() {
-    subscriptionModal.classList.remove('open');
-    subscriptionModal.setAttribute('aria-hidden', 'true');
+    setWizardStep(1, false);
+  }
+
+  // Auto-Save & Restore Draft Progress on Dedicated /apply.html Page
+  const DRAFT_STORAGE_KEY = 'azusa_application_draft_v1';
+  const draftSavedIndicator = document.getElementById('draftSavedIndicator');
+  const DRAFT_FIELD_IDS = [
+    'subFullName',
+    'subPreferredName',
+    'subEmail',
+    'subPhone',
+    'subAddress',
+    'subCity',
+    'subState',
+    'subZip',
+    'subOrg',
+    'subPosition',
+    'subWebsite',
+    'orgLegalName',
+    'orgPublicName',
+    'orgYearEst',
+    'orgPrimaryLeader',
+    'orgAddress',
+    'orgWebsite',
+    'orgType',
+    'orgSizeOrOther',
+    'orgMissionDesc',
+    'orgBoardApproval',
+    'orgAuthRep',
+    'orgAuthTitle',
+    'credStanding',
+    'credIssuingOrg',
+    'credYearIssued',
+    'credCurrentStatus',
+    'credYearsMinistry',
+    'bgRelationshipChrist',
+    'bgWhyAncm',
+    'bgHopingToReceive',
+    'bgGiftsAndService',
+    'bgOtherAffiliation',
+    'bgOtherOrgName',
+    'docQuestions',
+    'sigRepName',
+    'sigTitle',
+    'sigElectronic',
+  ];
+
+  function saveApplicationDraft() {
+    if (!subscriptionCheckoutForm) return;
+    try {
+      const fields = {};
+      DRAFT_FIELD_IDS.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) fields[id] = el.value;
+      });
+      const draft = {
+        selectedTier: state.selectedTier,
+        step: currentWizardStep,
+        fields,
+        updatedAt: Date.now(),
+      };
+      localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draft));
+      if (draftSavedIndicator) {
+        draftSavedIndicator.classList.add('pulsing');
+        setTimeout(() => draftSavedIndicator.classList.remove('pulsing'), 800);
+      }
+    } catch (_) {}
+  }
+
+  function restoreApplicationDraft() {
+    if (!subscriptionCheckoutForm) return;
+    try {
+      const raw = localStorage.getItem(DRAFT_STORAGE_KEY);
+      if (raw) {
+        const draft = JSON.parse(raw);
+        if (draft && draft.fields) {
+          Object.entries(draft.fields).forEach(([id, val]) => {
+            const el = document.getElementById(id);
+            if (el && val) el.value = val;
+          });
+        }
+        if (draft && draft.selectedTier && TIER_CATALOG[draft.selectedTier]) {
+          state.selectedTier = draft.selectedTier;
+        }
+        if (draft && draft.step) {
+          currentWizardStep = Math.max(1, Math.min(5, Number(draft.step) || 1));
+        }
+      }
+    } catch (_) {}
+
+    // URL query param ?tier=... overrides tier selection and jumps to Step 2 if coming from a plan card
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const urlTier = params.get('tier');
+      if (urlTier && TIER_CATALOG[urlTier]) {
+        state.selectedTier = urlTier;
+        if (currentWizardStep === 1) {
+          currentWizardStep = 2;
+        }
+      }
+    } catch (_) {}
+
+    modalTierInputs.forEach((input) => {
+      input.checked = input.value === state.selectedTier;
+    });
+
+    updateModalTotalDisplay();
+    setWizardStep(currentWizardStep, false);
+  }
+
+  if (subscriptionCheckoutForm) {
+    restoreApplicationDraft();
+    subscriptionCheckoutForm.addEventListener('input', saveApplicationDraft);
+    subscriptionCheckoutForm.addEventListener('change', saveApplicationDraft);
+  }
+
+  wizardStepTabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const target = Number(tab.getAttribute('data-wizard-step'));
+      setWizardStep(target, true);
+      saveApplicationDraft();
+    });
+  });
+
+  if (wizardPrevBtn) {
+    wizardPrevBtn.addEventListener('click', () => {
+      if (currentWizardStep > 1) {
+        setWizardStep(currentWizardStep - 1, true);
+        saveApplicationDraft();
+      }
+    });
+  }
+
+  if (wizardNextBtn) {
+    wizardNextBtn.addEventListener('click', () => {
+      if (currentWizardStep < 5) {
+        setWizardStep(currentWizardStep + 1, true);
+        saveApplicationDraft();
+      }
+    });
   }
 
   document.querySelectorAll('[data-select-plan]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      openSubscriptionModal(btn.getAttribute('data-select-plan'));
+    btn.addEventListener('click', (e) => {
+      const tier = btn.getAttribute('data-select-plan') || 'minister';
+      if (subscriptionCheckoutForm) {
+        e.preventDefault();
+        openSubscriptionModal(tier, false, 2);
+      }
     });
   });
 
   document.querySelectorAll('[data-open-modal="application"]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      openSubscriptionModal(btn.getAttribute('data-tier') || 'minister');
+    btn.addEventListener('click', (e) => {
+      const tier = btn.getAttribute('data-tier') || 'minister';
+      if (subscriptionCheckoutForm) {
+        e.preventDefault();
+        openSubscriptionModal(tier, false, 1);
+      }
     });
   });
 
   const changePlanPortalBtn = document.getElementById('changePlanPortalBtn');
   if (changePlanPortalBtn) {
-    changePlanPortalBtn.addEventListener('click', () => {
-      openSubscriptionModal(state.subscriber.tier);
-    });
-  }
-
-  if (closeModalBtn) {
-    closeModalBtn.addEventListener('click', closeSubscriptionModal);
-  }
-
-  if (subscriptionModal) {
-    subscriptionModal.addEventListener('click', (e) => {
-      if (e.target === subscriptionModal) closeSubscriptionModal();
+    changePlanPortalBtn.addEventListener('click', (e) => {
+      if (subscriptionCheckoutForm) {
+        e.preventDefault();
+        openSubscriptionModal(state.subscriber.tier, false, 1);
+      }
     });
   }
 
@@ -501,11 +785,15 @@
     });
   });
 
-  // Payment Method Switcher inside Modal
+  // Payment Method Switcher inside Step 5
   payTabs.forEach((tab) => {
     tab.addEventListener('click', () => {
       const method = tab.getAttribute('data-pay-method');
-      payTabs.forEach((t) => t.classList.toggle('active', t === tab));
+      activePayMethod = method || 'card';
+      payTabs.forEach((t) => {
+        t.classList.toggle('active', t === tab);
+        t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
+      });
       if (method === 'ach') {
         cardPaymentFields.classList.add('hidden');
         achPaymentFields.classList.remove('hidden');
@@ -516,10 +804,43 @@
     });
   });
 
+  // Live Credit Card Number & Expiry Formatting for Mobile & Desktop
+  if (ccNumberInput) {
+    ccNumberInput.addEventListener('input', (e) => {
+      const digits = e.target.value.replace(/\D/g, '').slice(0, 16);
+      const groups = digits.match(/.{1,4}/g);
+      e.target.value = groups ? groups.join(' ') : digits;
+
+      if (ccBrandBadge) {
+        if (/^4/.test(digits)) ccBrandBadge.textContent = 'VISA';
+        else if (/^(5[1-5]|2[2-7])/.test(digits)) ccBrandBadge.textContent = 'MASTERCARD';
+        else if (/^3[47]/.test(digits)) ccBrandBadge.textContent = 'AMEX';
+        else if (/^6(?:011|5)/.test(digits)) ccBrandBadge.textContent = 'DISCOVER';
+        else ccBrandBadge.textContent = 'CARD';
+      }
+    });
+  }
+
+  if (ccExpiryInput) {
+    ccExpiryInput.addEventListener('input', (e) => {
+      const digits = e.target.value.replace(/\D/g, '').slice(0, 4);
+      if (digits.length >= 3) {
+        e.target.value = `${digits.slice(0, 2)}/${digits.slice(2)}`;
+      } else {
+        e.target.value = digits;
+      }
+    });
+  }
+
   // Official Network Affiliation Application & Covenant Submission -> Sends to /api/webhook & Opens Portal
   if (subscriptionCheckoutForm) {
     subscriptionCheckoutForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (currentWizardStep < 5) {
+        setWizardStep(currentWizardStep + 1, true);
+        return;
+      }
+
       const val = (id) => {
         const el = document.getElementById(id);
         return el ? el.value.trim() : '';
@@ -579,7 +900,7 @@
       const credCurrentStatus = val('credCurrentStatus');
       const credYearsMinistry = val('credYearsMinistry');
 
-      // Section 8 & 9: Agreements & Signature
+      // Step 5: Payment & Signature
       const billingAuthAgree = checked('billingAuthAgree');
       const covenantAgree = checked('covenantAgree');
       const sigRepName = val('sigRepName') || fullName;
@@ -588,12 +909,27 @@
       const sigDate = val('sigDate') || new Date().toISOString().split('T')[0];
 
       if (!fullName || !email || !phone) {
-        showToast('Please enter your Full Legal Name, Email Address, and Telephone Number in Section 2.');
+        setWizardStep(2, true);
+        showToast('Please enter your Full Legal Name, Email Address, and Telephone Number in Step 2.');
         return;
       }
 
+      if (activePayMethod === 'card') {
+        const ccNumDigits = val('ccNumber').replace(/\D/g, '');
+        if (ccNumDigits.length < 13 || !val('ccExpiry') || !val('ccCvc')) {
+          showToast('Please enter your complete credit card number, expiration date, and security code (CVC).');
+          if (ccNumberInput) ccNumberInput.focus();
+          return;
+        }
+      } else {
+        if (!val('achRouting') || !val('achAccount')) {
+          showToast('Please enter your bank routing and account numbers for ACH billing.');
+          return;
+        }
+      }
+
       if (!allDoctrinesAffirmed || !billingAuthAgree || !covenantAgree) {
-        showToast('Please affirm Doctrinal Alignment (Section 5), Billing Authorization (Section 8), and Applicant Affirmation (Section 9).');
+        showToast('Please affirm Doctrinal Alignment, Recurring Billing Authorization, and Applicant Affirmation.');
         return;
       }
 
@@ -601,6 +937,10 @@
       const rateString = `$${tierInfo.monthly}.00 / month`;
       const memberId = `ANCM-2026-${Math.floor(1000 + Math.random() * 9000)}`;
       const companyName = org || orgPublicName || orgLegalName || 'Azusa Partner Ministry';
+      const maskedPaymentSummary =
+        activePayMethod === 'card'
+          ? `Credit Card (${ccBrandBadge ? ccBrandBadge.textContent : 'CARD'} ending in ${val('ccNumber').replace(/\D/g, '').slice(-4) || 'XXXX'})`
+          : `US Bank ACH (${val('achAccountType')} ending in ${val('achAccount').replace(/\D/g, '').slice(-4) || 'XXXX'})`;
 
       state.subscriber = {
         name: fullName,
@@ -610,21 +950,19 @@
         memberId,
       };
 
-      const appSubmitBtn = document.getElementById('appSubmitBtn');
       if (appSubmitBtn) {
         appSubmitBtn.disabled = true;
-        appSubmitBtn.textContent = 'Submitting Application...';
+        appSubmitBtn.textContent = 'Processing Application & Payment...';
       }
 
       const detailedMessage = [
         `=== ANCM NETWORK AFFILIATION APPLICATION (${memberId}) ===`,
-        `[SECTION 1 — AFFILIATION LEVEL]: ${tierInfo.name} (${rateString})`,
-        `[SECTION 2 — APPLICANT INFO]: Name: ${fullName} (Preferred: ${preferredName || 'N/A'}) | Email: ${email} | Phone: ${phone} | Address: ${address}, ${city}, ${st} ${zip} | Church/Ministry: ${companyName} | Position: ${position || 'N/A'} | Web/Social: ${website || 'N/A'}`,
-        `[SECTION 3 — CHURCH/MINISTRY INFO]: Legal Name: ${orgLegalName || 'N/A'} | Public Name: ${orgPublicName || 'N/A'} | Est: ${orgYearEst || 'N/A'} | Leader: ${orgPrimaryLeader || 'N/A'} | Type: ${orgType || 'N/A'} (${orgSizeOrOther || 'N/A'}) | Mission: ${orgMissionDesc || 'N/A'} | Leadership Approved: ${orgBoardApproval || 'N/A'} (${orgAuthRep || 'N/A'}, ${orgAuthTitle || 'N/A'})`,
-        `[SECTION 4 — SPIRITUAL BACKGROUND]: (1) Testimony/Ministry: ${bgRelationshipChrist || 'N/A'} | (2) Why ANCM: ${bgWhyAncm || 'N/A'} | (3) Hoping to Receive: ${bgHopingToReceive || 'N/A'} | (4) Gifts/Service: ${bgGiftsAndService || 'N/A'} | (5) Other Affiliation: ${bgOtherAffiliation} (${bgOtherOrgName || 'None'})`,
-        `[SECTION 5 — DOCTRINAL ALIGNMENT]: All 5 ANCM Doctrinal Statements Affirmed: Yes | Doctrinal Questions: ${docQuestions || 'None'}`,
-        `[SECTION 6 — MINISTERIAL CREDENTIALS]: Standing: ${credStanding || 'N/A'} | Issuing Org: ${credIssuingOrg || 'N/A'} | Year: ${credYearIssued || 'N/A'} | Status: ${credCurrentStatus || 'N/A'} | Active Years: ${credYearsMinistry || 'N/A'}`,
-        `[SECTIONS 7–9 — COVENANT, BILLING & AFFIRMATION]: Affirmed & Accepted | Representative: ${sigRepName} (${sigTitle || 'N/A'}) | Signature: ${sigElectronic} | Date: ${sigDate}`,
+        `[STEP 1 — AFFILIATION LEVEL]: ${tierInfo.name} (${rateString})`,
+        `[STEP 2 — APPLICANT INFO]: Name: ${fullName} (Preferred: ${preferredName || 'N/A'}) | Email: ${email} | Phone: ${phone} | Address: ${address}, ${city}, ${st} ${zip} | Church/Ministry: ${companyName} | Position: ${position || 'N/A'} | Web/Social: ${website || 'N/A'}`,
+        `[STEP 3 — CHURCH/MINISTRY & CREDENTIALS]: Legal Name: ${orgLegalName || 'N/A'} | Public Name: ${orgPublicName || 'N/A'} | Est: ${orgYearEst || 'N/A'} | Leader: ${orgPrimaryLeader || 'N/A'} | Type: ${orgType || 'N/A'} (${orgSizeOrOther || 'N/A'}) | Mission: ${orgMissionDesc || 'N/A'} | Leadership Approved: ${orgBoardApproval || 'N/A'} (${orgAuthRep || 'N/A'}, ${orgAuthTitle || 'N/A'}) | Standing: ${credStanding || 'N/A'} | Issuing Org: ${credIssuingOrg || 'N/A'} (${credYearIssued || 'N/A'}) | Active Years: ${credYearsMinistry || 'N/A'}`,
+        `[STEP 3 — SPIRITUAL BACKGROUND]: (1) Testimony/Ministry: ${bgRelationshipChrist || 'N/A'} | (2) Why ANCM: ${bgWhyAncm || 'N/A'} | (3) Hoping to Receive: ${bgHopingToReceive || 'N/A'} | (4) Gifts/Service: ${bgGiftsAndService || 'N/A'} | (5) Other Affiliation: ${bgOtherAffiliation} (${bgOtherOrgName || 'None'})`,
+        `[STEP 4 — DOCTRINAL ALIGNMENT]: All 5 ANCM Doctrinal Statements Affirmed: Yes | Doctrinal Questions: ${docQuestions || 'None'}`,
+        `[STEP 5 — PAYMENT, COVENANT & SIGNATURE]: Payment Method: ${maskedPaymentSummary} | Representative: ${sigRepName} (${sigTitle || 'N/A'}) | Signature: ${sigElectronic} | Date: ${sigDate}`,
       ].join('\n');
 
       await sendToWebhook({
@@ -659,7 +997,21 @@
 
       if (appSubmitBtn) {
         appSubmitBtn.disabled = false;
-        appSubmitBtn.textContent = 'Submit Affiliation Application & Covenant';
+        appSubmitBtn.textContent = 'Complete Application & Activate Affiliation';
+      }
+
+      try {
+        localStorage.removeItem(DRAFT_STORAGE_KEY);
+        localStorage.setItem('azusa_subscriber_profile', JSON.stringify({
+          ...state.subscriber,
+          maskedPaymentSummary,
+        }));
+      } catch (_) {}
+
+      // If submitted from the dedicated /apply.html page, redirect to index.html Member Portal
+      if (!portalView) {
+        window.location.href = `./index.html?checkout=success&tier=${encodeURIComponent(state.selectedTier)}&app_id=${encodeURIComponent(memberId)}`;
+        return;
       }
 
       const portalTierBadge = document.getElementById('portalTierBadge');
@@ -682,12 +1034,12 @@
 
       const billingPlanRate = document.getElementById('billingPlanRate');
       if (billingPlanRate) {
-        billingPlanRate.textContent = `${rateString} · Application Submitted (${state.subscriber.org})`;
+        billingPlanRate.textContent = `${rateString} · ${maskedPaymentSummary} (${state.subscriber.org})`;
       }
 
       closeSubscriptionModal();
       setView('portal');
-      showToast(`Affiliation Application (${memberId}) submitted for ${fullName}!`);
+      showToast(`Affiliation Application (${memberId}) & payment submitted for ${fullName}!`);
     });
   }
 
@@ -833,7 +1185,68 @@
     });
   }
 
-  // Handle return from Stripe Checkout (?checkout=success or ?checkout=canceled)
+  // Cookie & Privacy Consent Banner Logic
+  const COOKIE_CONSENT_KEY = 'azusa_cookie_consent_v1';
+  const cookieConsentBanner = document.getElementById('cookieConsentBanner');
+  const cookieAcceptBtn = document.getElementById('cookieAcceptBtn');
+  const cookieEssentialBtn = document.getElementById('cookieEssentialBtn');
+
+  try {
+    const savedConsent = localStorage.getItem(COOKIE_CONSENT_KEY);
+    if (!savedConsent && cookieConsentBanner) {
+      cookieConsentBanner.classList.remove('hidden');
+    }
+  } catch (_) {}
+
+  function setCookieConsent(choice) {
+    try {
+      localStorage.setItem(
+        COOKIE_CONSENT_KEY,
+        JSON.stringify({ choice, timestamp: new Date().toISOString() })
+      );
+    } catch (_) {}
+    if (cookieConsentBanner) {
+      cookieConsentBanner.classList.add('hidden');
+    }
+  }
+
+  if (cookieAcceptBtn) {
+    cookieAcceptBtn.addEventListener('click', () => setCookieConsent('all'));
+  }
+  if (cookieEssentialBtn) {
+    cookieEssentialBtn.addEventListener('click', () => setCookieConsent('essential'));
+  }
+
+  // Restore saved subscriber profile in Member Portal if present
+  try {
+    const savedProfileRaw = localStorage.getItem('azusa_subscriber_profile');
+    if (savedProfileRaw) {
+      const savedProfile = JSON.parse(savedProfileRaw);
+      if (savedProfile && savedProfile.name) {
+        state.subscriber = savedProfile;
+        const tierInfo = TIER_CATALOG[savedProfile.tier] || TIER_CATALOG.minister;
+        const rateString = `$${tierInfo.monthly}.00 / month`;
+        const portalTierBadge = document.getElementById('portalTierBadge');
+        if (portalTierBadge) portalTierBadge.textContent = tierInfo.shortBadge;
+        const portalWelcomeTitle = document.getElementById('portalWelcomeTitle');
+        if (portalWelcomeTitle) portalWelcomeTitle.textContent = `Welcome, ${savedProfile.name}`;
+        const memberCardName = document.getElementById('memberCardName');
+        if (memberCardName) memberCardName.textContent = `${savedProfile.name} · ${savedProfile.org}`;
+        const memberCardPlan = document.getElementById('memberCardPlan');
+        if (memberCardPlan) memberCardPlan.textContent = `${tierInfo.name} (${rateString})`;
+        const memberIdCode = document.getElementById('memberIdCode');
+        if (memberIdCode) memberIdCode.textContent = savedProfile.memberId;
+        const billingPlanTitle = document.getElementById('billingPlanTitle');
+        if (billingPlanTitle) billingPlanTitle.textContent = tierInfo.name;
+        const billingPlanRate = document.getElementById('billingPlanRate');
+        if (billingPlanRate) {
+          billingPlanRate.textContent = `${rateString} · ${savedProfile.maskedPaymentSummary || 'Active Standing'} (${savedProfile.org})`;
+        }
+      }
+    }
+  } catch (_) {}
+
+  // Handle return from Application Page or Stripe Checkout (?checkout=success or ?checkout=canceled)
   try {
     const params = new URLSearchParams(window.location.search);
     const checkoutStatus = params.get('checkout');
@@ -849,7 +1262,7 @@
       }
       setView('portal');
       showToast(
-        `Stripe payment confirmed${returnedAppId ? ` (${returnedAppId})` : ''}! Welcome to The Azusa Network.`
+        `Application & payment confirmed${returnedAppId ? ` (${returnedAppId})` : ''}! Welcome to The Azusa Network.`
       );
       window.history.replaceState({}, document.title, window.location.pathname);
     } else if (checkoutStatus === 'canceled') {
